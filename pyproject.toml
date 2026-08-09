@@ -1,0 +1,107 @@
+[project]
+name = "research-decision-engine"
+version = "1.0.0rc5"
+description = "Research Decision Engine Core: a compact research prototype for sequential synthetic experiment decisions."
+readme = "README.md"
+authors = [
+  { name = "RolandLin0724" }
+]
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[project.scripts]
+rde = "research_decision_engine.cli:main"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.10",
+  "pytest>=8.2",
+  "ruff>=0.5",
+]
+
+[build-system]
+requires = ["uv_build==0.11.32"]
+build-backend = "uv_build"
+
+[tool.uv]
+build-constraint-dependencies = ["uv_build==0.11.32"]
+
+[tool.uv.build-backend]
+module-name = "research_decision_engine"
+module-root = ""
+source-include = [
+  "CHANGELOG.md",
+  "CHANGELOG.zh-CN.md",
+  "CORE_V1_COMPATIBILITY.md",
+  "CORE_V1_COMPATIBILITY.zh-CN.md",
+  "README.zh-CN.md",
+  "SECURITY.md",
+  "SECURITY.zh-CN.md",
+  "TESTING.md",
+  "docs/command-adapter.md",
+  "docs/faq.md",
+  "docs/privacy-release-gate.md",
+  "docs/python-function-adapter.md",
+  "docs/replay.md",
+  "docs/release-notes/1.0.0rc3.md",
+  "docs/run-bundle.md",
+  "docs/run-spec.md",
+  "docs/troubleshooting.md",
+  "docs/zh-CN/command-adapter.md",
+  "docs/zh-CN/faq.md",
+  "docs/zh-CN/privacy-release-gate.md",
+  "docs/zh-CN/python-function-adapter.md",
+  "docs/zh-CN/replay.md",
+  "docs/zh-CN/release-notes/1.0.0rc3.md",
+  "docs/zh-CN/run-bundle.md",
+  "docs/zh-CN/run-spec.md",
+  "docs/zh-CN/troubleshooting.md",
+]
+source-exclude = ["/.gitignore"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["research_decision_engine"]
+
+[tool.pytest.ini_options]
+addopts = [
+  "--noconftest",
+  "-p",
+  "no:cacheprovider",
+  "@tests/core_v1_pytest.txt",
+]
+markers = [
+  "artifact5: exact frozen Artifact 5 schema and order-independent projection",
+  "oracle_reconstruction: Oracle-first source-observation reconstruction",
+  "sigma_reconstruction: exact frozen sigma-estimator semantic reconstruction",
+  "writer_authorization: lowest canonical writer authorization and no-clobber publication",
+  "actual_state_provenance: actual Git, interpreter, and executor provenance",
+  "lifecycle_interruption: manifest/recommendation forward-only interruption behavior",
+  "taskb_ledger: superseding attempt-ledger schemas and safe namespace behavior",
+  "taskb_authorization: genuine attempt authorization and irreversible claim behavior",
+  "taskb_durability: external staging, no-replace publication, and durability barriers",
+  "taskb_crash: adjacent lifecycle crash and recovered-final behavior",
+  "taskb_reader: independent lifecycle reader state classification",
+  "taskb_checkpoint: trusted checkpoint dispatch and historical isolation",
+  "taskb_unique_success: study-level unique SUCCESS enforcement",
+  "taskb_retry: exact retry-source eligibility and attribution",
+  "taskb_diagnostic: early and post-attempt failure diagnostics",
+  "taskc_execution_spec: exact immutable pre-submission execution specification",
+  "taskc_attestation: exact-issued executor completion attestation",
+  "taskc_result_order: actual returned-result order and job/result mapping",
+  "taskc_attestation_consumers: production result/attestation consumer binding",
+  "taskc_calibration_selector: authoritative five-effect calibration selection",
+  "taskc_calibration_interleaving: storage-order and unrelated-history invariance",
+  "taskc_calibration_negative: fail-closed calibration-history attacks",
+  "taskc_consumer_consistency: cross-consumer selection identity consistency",
+]

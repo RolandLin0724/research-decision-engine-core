@@ -1,0 +1,113 @@
+name: RDE Core v1
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  core-v1:
+    name: Core v1 (${{ matrix.os }}, Python ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.12"]
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install pinned uv
+        run: python -m pip install uv==0.11.32
+
+      - name: Sync locked dependencies
+        run: uv sync --locked
+
+      - name: Check source release contract and canonical fixtures
+        run: uv run python -m research_decision_engine.core_release_check
+
+      - name: Check formatting
+        run: uv run ruff format --check .
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Type check
+        run: uv run mypy .
+
+      - name: Collect Core node IDs twice
+        run: |
+          uv run python -m research_decision_engine.core_release_check --collect-nodeids .core-v1-nodeids-1.txt
+          uv run python -m research_decision_engine.core_release_check --collect-nodeids .core-v1-nodeids-2.txt
+
+      - name: Compare collected and canonical Core node IDs
+        run: uv run python -m research_decision_engine.core_release_check --compare-nodeids .core-v1-nodeids-1.txt .core-v1-nodeids-2.txt research_decision_engine/core-fixtures-v1/core-test-nodeids.txt
+
+      - name: Run the full Core test manifest
+        run: uv run python -m pytest -q -p no:cacheprovider
+
+      - name: Verify the complete SQLite v1-to-v6 fault and retry matrix
+        run: uv run python -m pytest -q -o addopts= --noconftest -p no:cacheprovider tests/test_sqlite_migration_atomicity.py
+
+      - name: Verify RunBundle replay without workload execution
+        run: uv run python -m pytest -q -o addopts= --noconftest -p no:cacheprovider tests/test_run_bundle_replay.py tests/test_run_bundle_v2_replay.py tests/test_run_bundle_v3_replay.py
+
+      - name: Verify the PythonFunctionAdapter example
+        run: uv run python -m pytest -q -o addopts= --noconftest -p no:cacheprovider tests/test_python_function_adapter.py
+
+      - name: Verify CommandAdapter CPU examples and all three v3 policies
+        run: uv run python -m pytest -q -o addopts= --noconftest -p no:cacheprovider tests/test_command_adapter_compression_example.py tests/test_command_adapter_compression_v2_example.py tests/test_command_adapter_compression_v3_example.py
+
+      - name: Build wheel and source distribution
+        run: uv build --sdist --wheel
+
+      - name: Discover and verify the exact built wheel
+        shell: python
+        run: |
+          import os
+          from email.parser import BytesParser
+          from pathlib import Path
+          import tomllib
+          import zipfile
+
+          workspace = Path(os.environ["GITHUB_WORKSPACE"])
+          project = tomllib.loads((workspace / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+          project_name = project["name"]
+          version = project["version"]
+          wheels = sorted((workspace / "dist").glob("research_decision_engine-*.whl"))
+          if len(wheels) != 1:
+              raise SystemExit(f"Expected exactly one research-decision-engine wheel, found {len(wheels)}.")
+          wheel = wheels[0]
+          expected_filename = f"research_decision_engine-{version}-py3-none-any.whl"
+          if wheel.name != expected_filename:
+              raise SystemExit(f"Unexpected wheel filename: {wheel.name!r}; expected {expected_filename!r}.")
+          with zipfile.ZipFile(wheel) as archive:
+              metadata_members = [name for name in archive.namelist() if name.endswith(".dist-info/METADATA")]
+              if len(metadata_members) != 1:
+                  raise SystemExit(f"Expected exactly one wheel METADATA member, found {len(metadata_members)}.")
+              metadata = BytesParser().parsebytes(archive.read(metadata_members[0]))
+          if metadata.get("Name") != project_name or metadata.get("Version") != version:
+              raise SystemExit("Wheel Name or Version metadata does not match the active project metadata.")
+          with Path(os.environ["GITHUB_ENV"]).open("a", encoding="utf-8", newline="\n") as github_env:
+              github_env.write(f"RDE_CORE_WHEEL={wheel.resolve()}\n")
+
+      - name: Check the clean installed wheel
+        working-directory: ${{ runner.temp }}
+        run: uv run --isolated --no-project --with "${{ env.RDE_CORE_WHEEL }}" -- python -m research_decision_engine.core_release_check --installed
+
+      - name: Check the installed command
+        working-directory: ${{ runner.temp }}
+        run: uv run --isolated --no-project --with "${{ env.RDE_CORE_WHEEL }}" -- rde --help

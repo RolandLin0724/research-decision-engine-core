@@ -1,0 +1,1604 @@
+RDE Core v1 Command Adapter Compression Corpus
+Provenance: project-authored synthetic text committed with the example.
+Purpose: deterministic offline compression, decompression, and exact round-trip verification.
+Policy scope: random with explicit seed 1729; no greedy or information-gain content.
+
+record=0000|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0000
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0000.
+
+record=0001|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0001
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0001.
+
+record=0002|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0002
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0002.
+
+record=0003|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0003
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0003.
+
+record=0004|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0004
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0004.
+
+record=0005|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0005
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0005.
+
+record=0006|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0006
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0006.
+
+record=0007|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0007
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0007.
+
+record=0008|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0008
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0008.
+
+record=0009|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0009
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0009.
+
+record=0010|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0010
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0010.
+
+record=0011|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0011
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0011.
+
+record=0012|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0012
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0012.
+
+record=0013|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0013
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0013.
+
+record=0014|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0014
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0014.
+
+record=0015|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0015
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0015.
+
+record=0016|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0016
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0016.
+
+record=0017|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0017
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0017.
+
+record=0018|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0018
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0018.
+
+record=0019|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0019
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0019.
+
+record=0020|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0020
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0020.
+
+record=0021|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0021
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0021.
+
+record=0022|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0022
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0022.
+
+record=0023|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0023
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0023.
+
+record=0024|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0024
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0024.
+
+record=0025|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0025
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0025.
+
+record=0026|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0026
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0026.
+
+record=0027|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0027
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0027.
+
+record=0028|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0028
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0028.
+
+record=0029|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0029
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0029.
+
+record=0030|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0030
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0030.
+
+record=0031|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0031
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0031.
+
+record=0032|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0032
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0032.
+
+record=0033|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0033
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0033.
+
+record=0034|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0034
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0034.
+
+record=0035|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0035
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0035.
+
+record=0036|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0036
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0036.
+
+record=0037|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0037
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0037.
+
+record=0038|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0038
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0038.
+
+record=0039|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0039
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0039.
+
+record=0040|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0040
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0040.
+
+record=0041|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0041
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0041.
+
+record=0042|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0042
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0042.
+
+record=0043|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0043
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0043.
+
+record=0044|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0044
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0044.
+
+record=0045|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0045
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0045.
+
+record=0046|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0046
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0046.
+
+record=0047|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0047
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0047.
+
+record=0048|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0048
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0048.
+
+record=0049|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0049
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0049.
+
+record=0050|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0050
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0050.
+
+record=0051|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0051
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0051.
+
+record=0052|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0052
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0052.
+
+record=0053|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0053
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0053.
+
+record=0054|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0054
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0054.
+
+record=0055|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0055
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0055.
+
+record=0056|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0056
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0056.
+
+record=0057|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0057
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0057.
+
+record=0058|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0058
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0058.
+
+record=0059|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0059
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0059.
+
+record=0060|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0060
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0060.
+
+record=0061|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0061
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0061.
+
+record=0062|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0062
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0062.
+
+record=0063|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0063
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0063.
+
+record=0064|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0064
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0064.
+
+record=0065|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0065
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0065.
+
+record=0066|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0066
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0066.
+
+record=0067|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0067
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0067.
+
+record=0068|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0068
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0068.
+
+record=0069|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0069
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0069.
+
+record=0070|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0070
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0070.
+
+record=0071|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0071
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0071.
+
+record=0072|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0072
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0072.
+
+record=0073|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0073
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0073.
+
+record=0074|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0074
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0074.
+
+record=0075|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0075
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0075.
+
+record=0076|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0076
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0076.
+
+record=0077|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0077
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0077.
+
+record=0078|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0078
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0078.
+
+record=0079|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0079
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0079.
+
+record=0080|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0080
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0080.
+
+record=0081|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0081
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0081.
+
+record=0082|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0082
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0082.
+
+record=0083|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0083
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0083.
+
+record=0084|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0084
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0084.
+
+record=0085|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0085
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0085.
+
+record=0086|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0086
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0086.
+
+record=0087|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0087
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0087.
+
+record=0088|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0088
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0088.
+
+record=0089|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0089
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0089.
+
+record=0090|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0090
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0090.
+
+record=0091|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0091
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0091.
+
+record=0092|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0092
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0092.
+
+record=0093|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0093
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0093.
+
+record=0094|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0094
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0094.
+
+record=0095|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0095
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0095.
+
+record=0096|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0096
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0096.
+
+record=0097|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0097
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0097.
+
+record=0098|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0098
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0098.
+
+record=0099|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0099
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0099.
+
+record=0100|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0100
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0100.
+
+record=0101|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0101
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0101.
+
+record=0102|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0102
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0102.
+
+record=0103|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0103
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0103.
+
+record=0104|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0104
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0104.
+
+record=0105|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0105
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0105.
+
+record=0106|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0106
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0106.
+
+record=0107|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0107
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0107.
+
+record=0108|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0108
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0108.
+
+record=0109|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0109
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0109.
+
+record=0110|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0110
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0110.
+
+record=0111|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0111
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0111.
+
+record=0112|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0112
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0112.
+
+record=0113|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0113
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0113.
+
+record=0114|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0114
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0114.
+
+record=0115|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0115
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0115.
+
+record=0116|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0116
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0116.
+
+record=0117|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0117
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0117.
+
+record=0118|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0118
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0118.
+
+record=0119|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0119
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0119.
+
+record=0120|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0120
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0120.
+
+record=0121|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0121
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0121.
+
+record=0122|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0122
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0122.
+
+record=0123|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0123
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0123.
+
+record=0124|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0124
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0124.
+
+record=0125|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0125
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0125.
+
+record=0126|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0126
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0126.
+
+record=0127|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0127
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0127.
+
+record=0128|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0128
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0128.
+
+record=0129|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0129
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0129.
+
+record=0130|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0130
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0130.
+
+record=0131|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0131
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0131.
+
+record=0132|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0132
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0132.
+
+record=0133|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0133
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0133.
+
+record=0134|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0134
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0134.
+
+record=0135|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0135
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0135.
+
+record=0136|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0136
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0136.
+
+record=0137|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0137
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0137.
+
+record=0138|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0138
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0138.
+
+record=0139|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0139
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0139.
+
+record=0140|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0140
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0140.
+
+record=0141|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0141
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0141.
+
+record=0142|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0142
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0142.
+
+record=0143|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0143
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0143.
+
+record=0144|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0144
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0144.
+
+record=0145|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0145
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0145.
+
+record=0146|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0146
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0146.
+
+record=0147|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0147
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0147.
+
+record=0148|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0148
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0148.
+
+record=0149|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0149
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0149.
+
+record=0150|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0150
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0150.
+
+record=0151|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0151
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0151.
+
+record=0152|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0152
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0152.
+
+record=0153|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0153
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0153.
+
+record=0154|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0154
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0154.
+
+record=0155|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0155
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0155.
+
+record=0156|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0156
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0156.
+
+record=0157|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0157
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0157.
+
+record=0158|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0158
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0158.
+
+record=0159|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0159
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0159.
+
+record=0160|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0160
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0160.
+
+record=0161|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0161
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0161.
+
+record=0162|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0162
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0162.
+
+record=0163|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0163
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0163.
+
+record=0164|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0164
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0164.
+
+record=0165|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0165
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0165.
+
+record=0166|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0166
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0166.
+
+record=0167|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0167
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0167.
+
+record=0168|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0168
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0168.
+
+record=0169|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0169
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0169.
+
+record=0170|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0170
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0170.
+
+record=0171|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0171
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0171.
+
+record=0172|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0172
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0172.
+
+record=0173|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0173
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0173.
+
+record=0174|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0174
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0174.
+
+record=0175|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0175
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0175.
+
+record=0176|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0176
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0176.
+
+record=0177|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0177
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0177.
+
+record=0178|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0178
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0178.
+
+record=0179|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0179
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0179.
+
+record=0180|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0180
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0180.
+
+record=0181|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0181
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0181.
+
+record=0182|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0182
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0182.
+
+record=0183|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0183
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0183.
+
+record=0184|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0184
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0184.
+
+record=0185|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0185
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0185.
+
+record=0186|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0186
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0186.
+
+record=0187|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0187
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0187.
+
+record=0188|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0188
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0188.
+
+record=0189|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0189
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0189.
+
+record=0190|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0190
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0190.
+
+record=0191|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0191
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0191.
+
+record=0192|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0192
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0192.
+
+record=0193|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0193
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0193.
+
+record=0194|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0194
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0194.
+
+record=0195|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0195
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0195.
+
+record=0196|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0196
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0196.
+
+record=0197|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0197
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0197.
+
+record=0198|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0198
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0198.
+
+record=0199|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0199
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0199.
+
+record=0200|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0200
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0200.
+
+record=0201|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0201
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0201.
+
+record=0202|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0202
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0202.
+
+record=0203|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0203
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0203.
+
+record=0204|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0204
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0204.
+
+record=0205|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0205
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0205.
+
+record=0206|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0206
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0206.
+
+record=0207|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0207
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0207.
+
+record=0208|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0208
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0208.
+
+record=0209|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0209
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0209.
+
+record=0210|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0210
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0210.
+
+record=0211|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0211
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0211.
+
+record=0212|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0212
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0212.
+
+record=0213|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0213
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0213.
+
+record=0214|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0214
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0214.
+
+record=0215|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0215
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0215.
+
+record=0216|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0216
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0216.
+
+record=0217|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0217
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0217.
+
+record=0218|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0218
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0218.
+
+record=0219|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0219
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0219.
+
+record=0220|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0220
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0220.
+
+record=0221|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0221
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0221.
+
+record=0222|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0222
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0222.
+
+record=0223|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0223
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0223.
+
+record=0224|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0224
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0224.
+
+record=0225|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0225
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0225.
+
+record=0226|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0226
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0226.
+
+record=0227|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0227
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0227.
+
+record=0228|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0228
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0228.
+
+record=0229|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0229
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0229.
+
+record=0230|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0230
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0230.
+
+record=0231|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0231
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0231.
+
+record=0232|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0232
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0232.
+
+record=0233|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0233
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0233.
+
+record=0234|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0234
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0234.
+
+record=0235|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0235
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0235.
+
+record=0236|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0236
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0236.
+
+record=0237|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0237
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0237.
+
+record=0238|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0238
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0238.
+
+record=0239|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0239
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0239.
+
+record=0240|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0240
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0240.
+
+record=0241|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0241
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0241.
+
+record=0242|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0242
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0242.
+
+record=0243|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0243
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0243.
+
+record=0244|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0244
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0244.
+
+record=0245|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0245
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0245.
+
+record=0246|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0246
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0246.
+
+record=0247|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0247
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0247.
+
+record=0248|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0248
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0248.
+
+record=0249|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0249
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0249.
+
+record=0250|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0250
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0250.
+
+record=0251|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0251
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0251.
+
+record=0252|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0252
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0252.
+
+record=0253|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0253
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0253.
+
+record=0254|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0254
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0254.
+
+record=0255|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0255
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0255.
+
+record=0256|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0256
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0256.
+
+record=0257|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0257
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0257.
+
+record=0258|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0258
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0258.
+
+record=0259|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0259
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0259.
+
+record=0260|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0260
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0260.
+
+record=0261|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0261
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0261.
+
+record=0262|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0262
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0262.
+
+record=0263|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0263
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0263.
+
+record=0264|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0264
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0264.
+
+record=0265|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0265
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0265.
+
+record=0266|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0266
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0266.
+
+record=0267|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0267
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0267.
+
+record=0268|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0268
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0268.
+
+record=0269|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0269
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0269.
+
+record=0270|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0270
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0270.
+
+record=0271|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0271
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0271.
+
+record=0272|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0272
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0272.
+
+record=0273|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0273
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0273.
+
+record=0274|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0274
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0274.
+
+record=0275|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0275
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0275.
+
+record=0276|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0276
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0276.
+
+record=0277|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0277
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0277.
+
+record=0278|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0278
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0278.
+
+record=0279|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0279
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0279.
+
+record=0280|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0280
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0280.
+
+record=0281|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0281
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0281.
+
+record=0282|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0282
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0282.
+
+record=0283|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0283
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0283.
+
+record=0284|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0284
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0284.
+
+record=0285|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0285
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0285.
+
+record=0286|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0286
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0286.
+
+record=0287|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0287
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0287.
+
+record=0288|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0288
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0288.
+
+record=0289|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0289
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0289.
+
+record=0290|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0290
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0290.
+
+record=0291|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0291
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0291.
+
+record=0292|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0292
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0292.
+
+record=0293|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0293
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0293.
+
+record=0294|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0294
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0294.
+
+record=0295|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0295
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0295.
+
+record=0296|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0296
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0296.
+
+record=0297|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0297
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0297.
+
+record=0298|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0298
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0298.
+
+record=0299|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0299
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0299.
+
+record=0300|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0300
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0300.
+
+record=0301|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0301
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0301.
+
+record=0302|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0302
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0302.
+
+record=0303|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0303
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0303.
+
+record=0304|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0304
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0304.
+
+record=0305|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0305
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0305.
+
+record=0306|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0306
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0306.
+
+record=0307|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0307
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0307.
+
+record=0308|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0308
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0308.
+
+record=0309|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0309
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0309.
+
+record=0310|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0310
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0310.
+
+record=0311|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0311
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0311.
+
+record=0312|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0312
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0312.
+
+record=0313|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0313
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0313.
+
+record=0314|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0314
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0314.
+
+record=0315|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0315
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0315.
+
+record=0316|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0316
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0316.
+
+record=0317|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0317
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0317.
+
+record=0318|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0318
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0318.
+
+record=0319|track=RDE_CORE_V1_0|workload=command_adapter_compression|offline=true
+candidate_dimensions=codec:gzip,bz2,lzma|level:1,3,6,9|chunk:single_stream,fixed_64_kib_members
+observation=objective:compression_ratio|cost:deterministic_weighted_byte_work|record_index=0319
+text=Sequential experiment selection preserves explicit seeds, truth-free candidates, bounded execution, durable SQLite history, and recorded-observation replay for record 0319.
