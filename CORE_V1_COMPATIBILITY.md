@@ -18,7 +18,7 @@ RDE Assurance authority.
 
 The current private candidate is `1.0.0rc5`. It remains experimental and
 pre-release: real production use and broad user or workload validation are not yet
-established. The sanitized product repository remains private; no public repository
+established. The sanitized product repository is public; no public repository
 release, GitHub Prerelease, tag, GitHub Release, or PyPI publication has occurred.
 
 ## Public Python imports

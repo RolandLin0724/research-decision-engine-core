@@ -55,7 +55,7 @@ def test_core_v1_workflow_pins_all_actions_to_the_verified_full_shas() -> None:
         f"        uses: actions/checkout@{CHECKOUT_SHA}\n"
         "        with:\n"
         "          persist-credentials: false\n"
-        "          fetch-depth: 2\n\n"
+        "          fetch-depth: 0\n\n"
         "      - name: Set up Python\n"
     )
     assert workflow.count(checkout_step) == 1

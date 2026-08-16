@@ -14,10 +14,10 @@
 
 - 不要为疑似安全漏洞创建公开 issue。
 - 不要在任何报告中包含 secrets、credentials、私人数据库或私人 RunBundles。
-- 在本仓库保持私有期间，没有有效的外部公开报告渠道。
-- 在每一项私有状态准备门禁通过之前，仓库保持私有。将仓库从私有改为公开需要
-  operator 明确授权。
-- 仓库保持私有期间，不声称 GitHub Private Vulnerability Reporting 已启用。
+- 本仓库已经公开，GitHub Private Vulnerability Reporting 是有效的外部报告渠道。
+- 在每一项私有状态准备门禁通过之后，仓库已经公开。将仓库从私有改为公开需要
+  operator 明确授权，并且已经获得该授权。
+- GitHub Private Vulnerability Reporting 已启用，并已验证其处于 active 状态。
   获得授权并改为公开后，必须立即启用该功能并验证其处于 active 状态。验证通过
   后，请使用仓库私有的 **Report a vulnerability** 流程。
 - 在 Private Vulnerability Reporting 验证通过之前，不得创建 tag、GitHub

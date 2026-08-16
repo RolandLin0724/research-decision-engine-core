@@ -46,8 +46,8 @@ RDE Assurance product track.
 - **Prior private candidate:** `1.0.0rc4` was superseded before publication when
   private-source commit references were removed from release-facing surfaces. Its
   private, unpublished evidence is preserved externally.
-- **Publication state:** the sanitized product repository remains private. No
-  public repository release, GitHub Prerelease, tag, GitHub Release, release
+- **Publication state:** the sanitized product repository is public. No public
+  repository release, GitHub Prerelease, tag, GitHub Release, release
   announcement, or PyPI publication has occurred.
 - **Private validation provenance:** exact private commit and workflow identities
   are retained only in external private evidence; the public package does not
@@ -251,10 +251,10 @@ Public project identity: RolandLin0724.
 
 Completed current-tree and history privacy audits do not authorize direct public
 conversion of the permanent private repository or publication of this candidate.
-The sanitized product repository stays private until every private preparation gate
-passes and an explicit operator authorizes a visibility change. Immediately after
-that change, Private Vulnerability Reporting must be enabled and verified before
-any release action. The remaining public-release gate stays open.
+The sanitized product repository became public only after every private preparation
+gate passed and an explicit operator authorized the visibility change. Private
+Vulnerability Reporting is enabled and verified. The remaining public-release gate
+stays open.
 
 ## Next reading
 

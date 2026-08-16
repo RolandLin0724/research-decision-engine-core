@@ -3,8 +3,8 @@
 [English](../privacy-release-gate.md) | 简体中文
 
 本文为未来公开发布建立强制门槛。它记录政策，不声称该门已经完成。在每一项私有
-状态准备门禁通过并由 operator 明确授权 visibility change 之前，净化的产品仓库
-保持私有。所有要求的公开后步骤通过之前，整体发布门禁仍未完成。
+状态准备门禁通过并由 operator 明确授权 visibility change 之后，净化的产品仓库
+已经公开。所有要求的公开后步骤通过之前，整体发布门禁仍未完成。
 
 ## 冻结的发布模型
 
@@ -72,7 +72,7 @@ repository，不是对私有仓库进行 visibility change。
 12. `S11_OPTIONAL_SEPARATE_PYPI_RC_AUTHORIZATION`：任何可选的 PyPI RC 上传都
     需要之后另行授权。
 
-仓库保持私有期间，不声称 GitHub Private Vulnerability Reporting 已启用。从
+GitHub Private Vulnerability Reporting 已启用并已验证其处于 active 状态。从
 visibility 变为公开到验证其 active 状态之前，不得创建 tag、GitHub Release、
 GitHub Prerelease，不得上传 PyPI，也不得发布 release announcement。公开 issue
 始终禁止用于披露疑似漏洞。
@@ -85,13 +85,13 @@ values。
 
 | 项目 | 状态 |
 | --- | --- |
-| 当前任务 | `PRIVATE_RC4_SEQUENCE_REPAIR` |
+| 当前任务 | `PUBLIC_RC6_GOVERNANCE_AND_CI_ALIGNMENT` |
 | Full Git-history privacy audit | `COMPLETED_WITH_INCREMENTAL_EXTENSION` |
 | Credential rotation/revocation | `COMPLETED_EXTERNALLY_OPERATOR_ATTESTED` |
-| Sanitized product repository | `ESTABLISHED_PRIVATE` |
-| Repository visibility | `PRIVATE` |
-| Repository visibility change | `NOT_AUTHORIZED` |
-| Private Vulnerability Reporting | `NOT_ENABLED_PRIVATE_STATE` |
+| Sanitized product repository | `ESTABLISHED_PUBLIC` |
+| Repository visibility | `PUBLIC` |
+| Repository visibility change | `AUTHORIZED_AND_COMPLETED` |
+| Private Vulnerability Reporting | `ENABLED_AND_VERIFIED` |
 | Tag / GitHub Release / PyPI | `NONE / NONE / NOT_PUBLISHED` |
 
 credential response status 来自外部 operator attestation。本任务没有执行或独立证明

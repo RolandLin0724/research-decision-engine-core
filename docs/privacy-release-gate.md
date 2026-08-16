@@ -4,9 +4,9 @@ English | [简体中文](zh-CN/privacy-release-gate.md)
 
 This document establishes a mandatory gate for a future public release. It records
 policy; it does not claim that the gate is complete. The sanitized product
-repository remains private until every private-state preparation gate passes and an
-operator explicitly authorizes a visibility change. The overall release gate stays
-incomplete until every required post-public step also passes.
+repository became public only after every private-state preparation gate passed and
+an operator explicitly authorized the visibility change. The overall release gate
+stays incomplete until every required post-public step also passes.
 
 ## Frozen release model
 
@@ -82,11 +82,10 @@ strict and fail closed:
 12. `S11_OPTIONAL_SEPARATE_PYPI_RC_AUTHORIZATION`: any optional PyPI RC upload
     requires its own later authorization.
 
-GitHub Private Vulnerability Reporting is not claimed to be enabled while the
-repository is private. From the moment visibility becomes public until its active
-state is verified, no tag, GitHub Release, GitHub Prerelease, PyPI upload, or
-release announcement may occur. Public issues must never be used to disclose a
-suspected vulnerability.
+GitHub Private Vulnerability Reporting is enabled and its active state is verified.
+From the moment visibility becomes public until its active state is verified, no
+tag, GitHub Release, GitHub Prerelease, PyPI upload, or release announcement may
+occur. Public issues must never be used to disclose a suspected vulnerability.
 
 Copying private history, refs, stashes, reflogs, raw evidence, or recovery material
 into the public repository is forbidden. Secret or credential values must never be
@@ -96,13 +95,13 @@ placed in release reports.
 
 | Item | Status |
 | --- | --- |
-| Current task | `PRIVATE_RC4_SEQUENCE_REPAIR` |
+| Current task | `PUBLIC_RC6_GOVERNANCE_AND_CI_ALIGNMENT` |
 | Full Git-history privacy audit | `COMPLETED_WITH_INCREMENTAL_EXTENSION` |
 | Credential rotation/revocation | `COMPLETED_EXTERNALLY_OPERATOR_ATTESTED` |
-| Sanitized product repository | `ESTABLISHED_PRIVATE` |
-| Repository visibility | `PRIVATE` |
-| Repository visibility change | `NOT_AUTHORIZED` |
-| Private Vulnerability Reporting | `NOT_ENABLED_PRIVATE_STATE` |
+| Sanitized product repository | `ESTABLISHED_PUBLIC` |
+| Repository visibility | `PUBLIC` |
+| Repository visibility change | `AUTHORIZED_AND_COMPLETED` |
+| Private Vulnerability Reporting | `ENABLED_AND_VERIFIED` |
 | Tag / GitHub Release / PyPI | `NONE / NONE / NOT_PUBLISHED` |
 
 The credential response status is an external operator attestation. This task did

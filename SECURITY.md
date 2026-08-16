@@ -16,12 +16,13 @@ supported release.
 - Do not open a public issue for a suspected security vulnerability.
 - Do not include secrets, credentials, private databases, or private RunBundles in
   any report.
-- While this repository remains private, no external public reporting channel is
-  active.
-- The repository remains private until every private-state preparation gate passes.
-  Changing it from private to public requires explicit operator authorization.
-- GitHub Private Vulnerability Reporting is not claimed to be enabled while the
-  repository is private. Immediately after an authorized public visibility change,
+- Now that this repository is public, GitHub Private Vulnerability Reporting is the
+  active external reporting channel.
+- The repository became public only after every private-state preparation gate
+  passed. That change from private to public required explicit operator
+  authorization and received it.
+- GitHub Private Vulnerability Reporting is enabled and its active state is
+  verified. Immediately after an authorized public visibility change,
   it must be enabled and its active state verified. Once verified, use the
   repository's private **Report a vulnerability** flow.
 - Private Vulnerability Reporting must be verified before any tag, GitHub Release,

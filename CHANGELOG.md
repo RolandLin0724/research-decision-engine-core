@@ -9,9 +9,9 @@ Research Decision Engine Core (RDE Core) is pre-release.
 - **Prior private candidate:** `1.0.0rc4`, which was superseded before publication
   when private-source commit references were removed from release-facing surfaces
 
-The sanitized product repository remains private. No public repository release,
-tag, or GitHub Release exists, and the package is not published to PyPI. This
-changelog describes a private RC candidate, not a public release.
+The sanitized product repository is public. No public repository release, tag, or
+GitHub Release exists, and the package is not published to PyPI. This changelog
+describes an unpublished RC candidate, not a public release.
 
 ## [Unreleased]
 

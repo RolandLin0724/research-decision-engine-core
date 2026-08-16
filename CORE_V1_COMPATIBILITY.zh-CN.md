@@ -16,7 +16,7 @@ Research Decision Engine Core 是产品展示品牌，RDE Core 是简称。Pytho
 远程 CI 已通过，二者也都不会创建 RDE Assurance 权限。
 
 当前私有候选为 `1.0.0rc5`。项目仍为实验性预发布状态，真实生产使用和广泛的
-用户或 workload 验证尚未确立。净化的产品仓库仍为私有；尚未执行公开仓库发布，
+用户或 workload 验证尚未确立。净化的产品仓库已经公开；尚未执行公开仓库发布，
 也未创建 GitHub Prerelease、tag、GitHub Release 或 PyPI 发布。
 
 ## 公开 Python 导入

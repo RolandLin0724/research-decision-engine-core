@@ -423,6 +423,31 @@ RC5_SOURCE_PATH_SET_SHA256 = "26eb1c07dcc691af4e602709f75aca916d5eb1f88892cc6d6d
 RC5_PRODUCT_PATH_SET_SHA256 = "33cbb31c21938660788b3abc77ab7125e9ea42101659daafe8037955b24950d5"
 RC5_SANITIZED_PRODUCT_ROOT_OID = "80244e7a1652e62937f789c243aac829be167cbd"
 RC5_SELF_HOSTING_REPAIR_PATH = "tests/test_core_v1_release_contract.py"
+RC6_GOVERNANCE_PARENT_OID = "b67a2a49f673d8ffc8ec463f50d49d022d5f5b29"
+RC6_GOVERNANCE_ANCESTRY_LENGTH = 3
+RC6_GOVERNANCE_CHANGED_PATHS = (
+    ".github/workflows/core-v1.yml",
+    "CHANGELOG.md",
+    "CHANGELOG.zh-CN.md",
+    "CORE_V1_COMPATIBILITY.md",
+    "CORE_V1_COMPATIBILITY.zh-CN.md",
+    "README.md",
+    "README.zh-CN.md",
+    "SECURITY.md",
+    "SECURITY.zh-CN.md",
+    "docs/privacy-release-gate.md",
+    "docs/release-notes/1.0.0rc5.md",
+    "docs/zh-CN/privacy-release-gate.md",
+    "docs/zh-CN/release-notes/1.0.0rc5.md",
+    "tests/test_core_v1_ci_workflow.py",
+    "tests/test_core_v1_release_contract.py",
+)
+RC6_GOVERNANCE_FROZEN_PAYLOAD_ROOTS = (
+    "LICENSE",
+    "pyproject.toml",
+    "research_decision_engine/",
+    "uv.lock",
+)
 PUBLIC_PROVENANCE_ROLE_TOKEN_SCHEMA = "rde-core-public-provenance-role-token/v1"
 PUBLIC_PROVENANCE_ROLE_TOKEN_NAMESPACE = "RDE_CORE_PUBLIC_PROVENANCE_ROLE_V1"
 PUBLIC_PROVENANCE_ROLE_TOKENS = {
@@ -479,7 +504,7 @@ ISSUE_TEMPLATE_PATHS = frozenset(
 )
 ISSUE_TEMPLATE_FRONTMATTER_KEYS = frozenset({"name", "about", "title", "labels", "assignees"})
 CORE_WORKFLOW_PATH = ".github/workflows/core-v1.yml"
-CORE_WORKFLOW_SHA256 = "92fb56064e10d6f1caff6ba877864338ec4a8456f7b2d1e8c678254a86271c6d"
+CORE_WORKFLOW_SHA256 = "b48afbd078a5e9869c9c4e7d820d7bdfea798c7863c2be2d77bab12d3b1320ac"
 CONTRIBUTING_COMMANDS = (
     "uv lock --check",
     "uv sync --locked",
@@ -1044,6 +1069,16 @@ def _path_set_sha256(paths: set[str]) -> str:
     ).hexdigest()
 
 
+def _governance_frozen_payload_paths(paths: set[str]) -> set[str]:
+    return {
+        path
+        for path in paths
+        if any(
+            path == root or path.startswith(root) for root in RC6_GOVERNANCE_FROZEN_PAYLOAD_ROOTS
+        )
+    }
+
+
 def _path_entry_exists(path: Path) -> bool:
     return os.path.lexists(path)
 
@@ -1323,6 +1358,15 @@ def _release_document_committed_candidate_paths(
         assert len(ancestry) == 1 and not parent_oids
         return "SANITIZED_PRODUCT_ZERO_PARENT_ROOT", tree_paths, set()
     assert parent_oids
+    if (
+        len(ancestry) == RC6_GOVERNANCE_ANCESTRY_LENGTH
+        and parent_oids[0] == RC6_GOVERNANCE_PARENT_OID
+        and changed_paths
+        and changed_paths <= set(RC6_GOVERNANCE_CHANGED_PATHS)
+        and tree_paths == tree_paths_by_commit[parent_oids[0]]
+        and changed_paths.isdisjoint(_governance_frozen_payload_paths(tree_paths))
+    ):
+        return "PUBLIC_GOVERNANCE_LINEAR_DESCENDANT", tree_paths, changed_paths
     return "SANITIZED_PRODUCT_LINEAR_DESCENDANT", tree_paths, changed_paths
 
 
@@ -1620,6 +1664,16 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     assert len(RC5_PRODUCT_APPLICABLE_REMEDIATION_PATHS) == 35
     assert len(RC5_INTERNAL_ONLY_REMEDIATION_PATHS) == 4
     assert len(RC5_INTERNAL_EXCLUDE_PATHS) == 17
+    assert len(RC6_GOVERNANCE_CHANGED_PATHS) == 15
+    assert tuple(sorted(RC6_GOVERNANCE_CHANGED_PATHS)) == RC6_GOVERNANCE_CHANGED_PATHS
+    assert len(set(RC6_GOVERNANCE_CHANGED_PATHS)) == len(RC6_GOVERNANCE_CHANGED_PATHS)
+    assert tuple(sorted(RC6_GOVERNANCE_FROZEN_PAYLOAD_ROOTS)) == RC6_GOVERNANCE_FROZEN_PAYLOAD_ROOTS
+    assert not _governance_frozen_payload_paths(set(RC6_GOVERNANCE_CHANGED_PATHS))
+    assert RC6_GOVERNANCE_ANCESTRY_LENGTH == 3
+    assert re.fullmatch(r"[0-9a-f]{40}", RC6_GOVERNANCE_PARENT_OID) is not None
+    assert RC6_GOVERNANCE_PARENT_OID != RC5_SANITIZED_PRODUCT_ROOT_OID
+    assert RC6_GOVERNANCE_PARENT_OID not in PUBLIC_PROVENANCE_ROLE_TOKENS.values()
+    assert RC5_SELF_HOSTING_REPAIR_PATH in RC6_GOVERNANCE_CHANGED_PATHS
     assert RC5_SOURCE_TRACKED_PATH_COUNT - RC5_PRODUCT_TRACKED_PATH_COUNT == 17
     assert CI_NODEID_SCRATCH_PATHS == (
         ".core-v1-nodeids-1.txt",
@@ -1748,11 +1802,16 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
         assert committed_candidate_paths == set()
         assert substantive_candidate_paths in (set(), repair_paths)
         assert all(not (REPOSITORY_ROOT / path).exists() for path in RC5_INTERNAL_EXCLUDE_PATHS)
+    elif commit_model == "PUBLIC_GOVERNANCE_LINEAR_DESCENDANT":
+        assert len(tracked_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
+        assert committed_candidate_paths == set(RC6_GOVERNANCE_CHANGED_PATHS)
+        assert substantive_candidate_paths == set()
+        assert all(not (REPOSITORY_ROOT / path).exists() for path in RC5_INTERNAL_EXCLUDE_PATHS)
     else:
         assert commit_model == "SANITIZED_PRODUCT_LINEAR_DESCENDANT"
         assert len(tracked_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
         assert committed_candidate_paths in (set(), repair_paths)
-        assert substantive_candidate_paths == set()
+        assert substantive_candidate_paths in (set(), set(RC6_GOVERNANCE_CHANGED_PATHS))
         assert all(not (REPOSITORY_ROOT / path).exists() for path in RC5_INTERNAL_EXCLUDE_PATHS)
     assert set(PROTECTED_DOCUMENT_BLOB_CONTRACT).isdisjoint(source_remediation_paths)
     _assert_rc5_public_provenance_role_token_contract()
@@ -2274,6 +2333,78 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     )
     assert role_token_occurrences == 0
 
+    # 21. The exact post-D020 governance descendant is accepted as its own class.
+    governance_chain = (
+        (
+            scripted_child_two_oid,
+            (RC6_GOVERNANCE_PARENT_OID,),
+            scripted_product_paths,
+        ),
+        (
+            RC6_GOVERNANCE_PARENT_OID,
+            (RC5_SANITIZED_PRODUCT_ROOT_OID,),
+            scripted_product_paths,
+        ),
+        *root_chain,
+    )
+    governance_changes = set(RC6_GOVERNANCE_CHANGED_PATHS)
+    (governance_model, governance_tree, governance_paths), _governance_calls = run_script(
+        scripted_responses(governance_chain, changed_paths=governance_changes)
+    )
+    assert governance_model == "PUBLIC_GOVERNANCE_LINEAR_DESCENDANT"
+    assert governance_tree == scripted_product_paths
+    assert governance_paths == governance_changes
+
+    # 22. A governance-shaped child of any other parent is not the governance class.
+    wrong_parent_chain = (
+        (scripted_child_two_oid, (scripted_child_one_oid,), scripted_product_paths),
+        *one_child_chain,
+    )
+    (wrong_parent_model, _wrong_parent_tree, _wrong_parent_paths), _wrong_parent_calls = run_script(
+        scripted_responses(wrong_parent_chain, changed_paths=governance_changes)
+    )
+    assert wrong_parent_model == "SANITIZED_PRODUCT_LINEAR_DESCENDANT"
+
+    # 23. A later descendant of the governance commit is not the governance class.
+    later_descendant_chain = (
+        (scripted_child_one_oid, (scripted_child_two_oid,), scripted_product_paths),
+        *governance_chain,
+    )
+    (later_model, _later_tree, _later_paths), _later_calls = run_script(
+        scripted_responses(later_descendant_chain, changed_paths=governance_changes)
+    )
+    assert later_model == "SANITIZED_PRODUCT_LINEAR_DESCENDANT"
+
+    # 24. A changed path outside the governance allowlist is not the governance class.
+    outside_allowlist = governance_changes | {
+        next(iter(sorted(_governance_frozen_payload_paths(scripted_product_paths))))
+    }
+    (outside_model, _outside_tree, outside_paths), _outside_calls = run_script(
+        scripted_responses(governance_chain, changed_paths=outside_allowlist)
+    )
+    assert outside_model == "SANITIZED_PRODUCT_LINEAR_DESCENDANT"
+    assert outside_paths == outside_allowlist
+
+    # 25. An empty-diff descendant at governance depth still fails closed.
+    with pytest.raises(AssertionError):
+        run_script(scripted_responses(governance_chain, changed_paths=set()))
+
+    # 26. A governance-shaped commit whose tree gains an internal path fails closed.
+    with pytest.raises(AssertionError):
+        run_script(
+            scripted_responses(
+                (
+                    (
+                        scripted_child_two_oid,
+                        (RC6_GOVERNANCE_PARENT_OID,),
+                        scripted_product_paths | {RC5_INTERNAL_EXCLUDE_PATHS[0]},
+                    ),
+                    *governance_chain[1:],
+                ),
+                changed_paths=governance_changes,
+            )
+        )
+
     changed_text = {
         relative_path: _strict_markdown_text(REPOSITORY_ROOT / relative_path)
         for relative_path in sorted(RC5_CHANGED_MARKDOWN_PATHS)
@@ -2554,8 +2685,8 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
 
     rc5_notes = changed_text["docs/release-notes/1.0.0rc5.md"]
     rc5_notes_zh = changed_text["docs/zh-CN/release-notes/1.0.0rc5.md"]
-    assert rc5_notes.splitlines()[0] == "# PRIVATE RC CANDIDATE — NOT PUBLISHED"
-    assert rc5_notes_zh.splitlines()[0] == "# 私有 RC 候选 — 尚未发布"
+    assert rc5_notes.splitlines()[0] == "# RC CANDIDATE — NOT PUBLISHED"
+    assert rc5_notes_zh.splitlines()[0] == "# RC 候选 — 尚未发布"
     assert tuple(
         line.removeprefix("## ") for line in rc5_notes.splitlines() if line.startswith("## ")
     ) == (
@@ -2592,11 +2723,11 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
         ),
     )
     assert "**Package version:** `1.0.0rc5`" in rc5_notes
-    assert "**Candidate state:** `PRIVATE_RC_CANDIDATE_NOT_PUBLISHED`" in rc5_notes
-    assert "**Public visibility:** `NO`" in rc5_notes
+    assert "**Candidate state:** `RC_CANDIDATE_NOT_PUBLISHED`" in rc5_notes
+    assert "**Public visibility:** `YES`" in rc5_notes
     assert "**软件包版本：** `1.0.0rc5`" in rc5_notes_zh
-    assert "**候选状态：** `PRIVATE_RC_CANDIDATE_NOT_PUBLISHED`" in rc5_notes_zh
-    assert "**公开可见：** `NO`" in rc5_notes_zh
+    assert "**候选状态：** `RC_CANDIDATE_NOT_PUBLISHED`" in rc5_notes_zh
+    assert "**公开可见：** `YES`" in rc5_notes_zh
     assert re.search(r"\bpip(?:3)?\s+install\b", rc5_notes, flags=re.IGNORECASE) is None
     assert re.search(r"\bpip(?:3)?\s+install\b", rc5_notes_zh, flags=re.IGNORECASE) is None
     assert re.search(r"\b20\d{2}-\d{2}-\d{2}\b", rc5_notes) is None
@@ -2753,8 +2884,8 @@ RDE Core 目前还没有在真实生产环境中运行过，也没有经过大�
     )
     assert "active private candidate is `1.0.0rc5`" in " ".join(readme.split())
     assert "当前私有候选版本是 `1.0.0rc5`" in " ".join(readme_zh.split())
-    assert "sanitized product repository remains private" in " ".join(readme.split()).casefold()
-    assert "净化的产品仓库仍为私有" in " ".join(readme_zh.split())
+    assert "sanitized product repository is public" in " ".join(readme.split()).casefold()
+    assert "净化的产品仓库已经公开" in " ".join(readme_zh.split())
     assert (
         "[README project-status and development disclosure]"
         "(../../README.md#project-status-and-development-approach)" in release_notes
@@ -3363,8 +3494,11 @@ def _assert_security_privacy_release_contract() -> None:
         "Do not open a public issue for a suspected security vulnerability." in security_normalized
     )
     assert "不要为疑似安全漏洞创建公开 issue。" in security_zh_normalized
-    assert "no external public reporting channel is active" in security_normalized
-    assert "没有有效的外部公开报告渠道" in security_zh_normalized
+    assert (
+        "GitHub Private Vulnerability Reporting is the active external reporting channel"
+        in security_normalized
+    )
+    assert "是有效的外部报告渠道" in security_zh_normalized
     assert "No response-time or resolution SLA is promised" in security_normalized
     assert "不承诺响应时间或解决时限 SLA" in security_zh_normalized
 
@@ -3409,23 +3543,23 @@ def _assert_security_privacy_release_contract() -> None:
         "| 法定姓名 | `NOT_PUBLISHED` |",
     )
     english_current_status_rows = (
-        "| Current task | `PRIVATE_RC4_SEQUENCE_REPAIR` |",
+        "| Current task | `PUBLIC_RC6_GOVERNANCE_AND_CI_ALIGNMENT` |",
         "| Full Git-history privacy audit | `COMPLETED_WITH_INCREMENTAL_EXTENSION` |",
         "| Credential rotation/revocation | `COMPLETED_EXTERNALLY_OPERATOR_ATTESTED` |",
-        "| Sanitized product repository | `ESTABLISHED_PRIVATE` |",
-        "| Repository visibility | `PRIVATE` |",
-        "| Repository visibility change | `NOT_AUTHORIZED` |",
-        "| Private Vulnerability Reporting | `NOT_ENABLED_PRIVATE_STATE` |",
+        "| Sanitized product repository | `ESTABLISHED_PUBLIC` |",
+        "| Repository visibility | `PUBLIC` |",
+        "| Repository visibility change | `AUTHORIZED_AND_COMPLETED` |",
+        "| Private Vulnerability Reporting | `ENABLED_AND_VERIFIED` |",
         "| Tag / GitHub Release / PyPI | `NONE / NONE / NOT_PUBLISHED` |",
     )
     chinese_current_status_rows = (
-        "| 当前任务 | `PRIVATE_RC4_SEQUENCE_REPAIR` |",
+        "| 当前任务 | `PUBLIC_RC6_GOVERNANCE_AND_CI_ALIGNMENT` |",
         "| Full Git-history privacy audit | `COMPLETED_WITH_INCREMENTAL_EXTENSION` |",
         "| Credential rotation/revocation | `COMPLETED_EXTERNALLY_OPERATOR_ATTESTED` |",
-        "| Sanitized product repository | `ESTABLISHED_PRIVATE` |",
-        "| Repository visibility | `PRIVATE` |",
-        "| Repository visibility change | `NOT_AUTHORIZED` |",
-        "| Private Vulnerability Reporting | `NOT_ENABLED_PRIVATE_STATE` |",
+        "| Sanitized product repository | `ESTABLISHED_PUBLIC` |",
+        "| Repository visibility | `PUBLIC` |",
+        "| Repository visibility change | `AUTHORIZED_AND_COMPLETED` |",
+        "| Private Vulnerability Reporting | `ENABLED_AND_VERIFIED` |",
         "| Tag / GitHub Release / PyPI | `NONE / NONE / NOT_PUBLISHED` |",
     )
     assert all(row in privacy for row in english_release_model_rows)
@@ -3456,14 +3590,17 @@ def _assert_security_privacy_release_contract() -> None:
             sorted(text.index(item) for item in sequence)
         )
     assert (
-        "The repository remains private until every private-state preparation gate passes."
+        "The repository became public only after every private-state preparation gate passed."
         in security_normalized
     )
     assert (
-        "Changing it from private to public requires explicit operator authorization."
+        "That change from private to public required explicit operator authorization and "
+        "received it." in security_normalized
+    )
+    assert (
+        "GitHub Private Vulnerability Reporting is enabled and its active state is verified."
         in security_normalized
     )
-    assert "not claimed to be enabled while the repository is private" in security_normalized
     assert (
         "Immediately after an authorized public visibility change, it must be enabled and its "
         "active state verified." in security_normalized
@@ -3477,10 +3614,12 @@ def _assert_security_privacy_release_contract() -> None:
         "audit must pass again before any release action." in security_normalized
     )
     assert "Public issues remain forbidden for vulnerability disclosure" in security_normalized
-    assert "在每一项私有状态准备门禁通过之前，仓库保持私有" in security_zh_normalized
-    assert "将仓库从私有改为公开需要 operator 明确授权" in security_zh_normalized
+    assert "在每一项私有状态准备门禁通过之后，仓库已经公开" in security_zh_normalized
     assert (
-        "仓库保持私有期间，不声称 GitHub Private Vulnerability Reporting 已启用"
+        "将仓库从私有改为公开需要 operator 明确授权，并且已经获得该授权" in security_zh_normalized
+    )
+    assert (
+        "GitHub Private Vulnerability Reporting 已启用，并已验证其处于 active 状态"
         in security_zh_normalized
     )
     assert (
