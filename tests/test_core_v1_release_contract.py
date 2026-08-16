@@ -421,13 +421,8 @@ RC5_SOURCE_TRACKED_PATH_COUNT = 296
 RC5_PRODUCT_TRACKED_PATH_COUNT = 279
 RC5_SOURCE_PATH_SET_SHA256 = "26eb1c07dcc691af4e602709f75aca916d5eb1f88892cc6d6da26c45ce93529a"
 RC5_PRODUCT_PATH_SET_SHA256 = "33cbb31c21938660788b3abc77ab7125e9ea42101659daafe8037955b24950d5"
-RC5_OPENING_SOURCE_COMMIT_SUBJECT = (
-    "security: remove private provenance references and freeze 1.0.0rc5"
-)
+RC5_SANITIZED_PRODUCT_ROOT_OID = "80244e7a1652e62937f789c243aac829be167cbd"
 RC5_SELF_HOSTING_REPAIR_PATH = "tests/test_core_v1_release_contract.py"
-RC5_SELF_HOSTING_REPAIR_COMMIT_SUBJECT = (
-    "test: distinguish RC5 source remediation from sanitized product root"
-)
 PUBLIC_PROVENANCE_ROLE_TOKEN_SCHEMA = "rde-core-public-provenance-role-token/v1"
 PUBLIC_PROVENANCE_ROLE_TOKEN_NAMESPACE = "RDE_CORE_PUBLIC_PROVENANCE_ROLE_V1"
 PUBLIC_PROVENANCE_ROLE_TOKENS = {
@@ -1007,11 +1002,35 @@ def _assert_shared_markers(texts: tuple[str, str], markers: frozenset[str]) -> N
         assert all(marker in text for marker in markers)
 
 
+GIT_TOPOLOGY_ENVIRONMENT_NAMES = frozenset(
+    {
+        "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+        "GIT_CEILING_DIRECTORIES",
+        "GIT_COMMON_DIR",
+        "GIT_DIR",
+        "GIT_DISCOVERY_ACROSS_FILESYSTEM",
+        "GIT_GRAFT_FILE",
+        "GIT_INDEX_FILE",
+        "GIT_NAMESPACE",
+        "GIT_NO_REPLACE_OBJECTS",
+        "GIT_OBJECT_DIRECTORY",
+        "GIT_QUARANTINE_PATH",
+        "GIT_REPLACE_REF_BASE",
+        "GIT_SHALLOW_FILE",
+        "GIT_WORK_TREE",
+    }
+)
+
+
 def _git_output(cwd: Path, *arguments: str, environment: Mapping[str, str] | None = None) -> bytes:
+    command_environment = dict(os.environ if environment is None else environment)
+    for name in tuple(command_environment):
+        if name in GIT_TOPOLOGY_ENVIRONMENT_NAMES or name.startswith("GIT_CONFIG_"):
+            del command_environment[name]
     completed = subprocess.run(
         ["git", *arguments],
         cwd=cwd,
-        env=None if environment is None else dict(environment),
+        env=command_environment,
         capture_output=True,
         check=False,
     )
@@ -1025,69 +1044,179 @@ def _path_set_sha256(paths: set[str]) -> str:
     ).hexdigest()
 
 
+def _path_entry_exists(path: Path) -> bool:
+    return os.path.lexists(path)
+
+
+def _path_entry_is_redirect(path: Path) -> bool:
+    if path.is_symlink() or path.is_junction():
+        return True
+    if not path.is_dir():
+        return False
+    for directory, directory_names, file_names in os.walk(path, followlinks=False):
+        directory_path = Path(directory)
+        for name in (*directory_names, *file_names):
+            entry = directory_path / name
+            if entry.is_symlink() or entry.is_junction():
+                return True
+    return False
+
+
 def _release_document_committed_candidate_paths(
     repository: Path,
     *,
     git_output: Callable[..., bytes],
+    path_entry_exists: Callable[[Path], bool] = _path_entry_exists,
+    path_entry_is_redirect: Callable[[Path], bool] = _path_entry_is_redirect,
 ) -> tuple[str, set[str], set[str]]:
     def strict_oid(payload: bytes) -> str:
         match = re.fullmatch(rb"([0-9a-f]{40})\n", payload)
         assert match is not None
         return match.group(1).decode("ascii")
 
+    def strict_path(payload: bytes) -> Path:
+        assert payload.endswith(b"\n") and payload.count(b"\n") == 1
+        path = Path(payload[:-1].decode("utf-8", errors="strict"))
+        assert path.is_absolute()
+        return path
+
+    def parse_identity(header: bytes, kind: bytes) -> tuple[bytes, bytes]:
+        match = re.fullmatch(
+            kind + rb" ([^<>\r\n]+) <([^<>\r\n]+)> [0-9]+ [+-][0-9]{4}",
+            header,
+        )
+        assert match is not None
+        name, email = match.groups()
+        assert name == name.strip() and email == email.strip()
+        return name, email
+
+    def parse_commit(oid: str) -> tuple[str, tuple[str, ...], tuple[bytes, bytes], bytes]:
+        assert git_output(repository, "cat-file", "-t", oid) == b"commit\n"
+        commit_payload = git_output(repository, "cat-file", "commit", oid)
+        header_payload, separator, message = commit_payload.partition(b"\n\n")
+        assert separator == b"\n\n"
+        header_lines = header_payload.splitlines()
+        assert header_lines
+        tree_lines = [line for line in header_lines if line.startswith(b"tree")]
+        assert len(tree_lines) == 1
+        tree_match = re.fullmatch(rb"tree ([0-9a-f]{40})", tree_lines[0])
+        assert tree_match is not None
+        tree_oid = tree_match.group(1).decode("ascii")
+        if tree_oid in PUBLIC_PROVENANCE_ROLE_TOKENS.values():
+            raise AssertionError("public provenance role token cannot identify a tree")
+        parent_oids: list[str] = []
+        for line in header_lines:
+            if line == b"parent" or line.startswith(b"parent "):
+                parent_match = re.fullmatch(rb"parent ([0-9a-f]{40})", line)
+                assert parent_match is not None
+                parent_oids.append(parent_match.group(1).decode("ascii"))
+        author_lines = [line for line in header_lines if line.startswith(b"author")]
+        committer_lines = [line for line in header_lines if line.startswith(b"committer")]
+        assert len(author_lines) == 1 and len(committer_lines) == 1
+        assert len(header_lines) == 3 + len(parent_oids)
+        author_identity = parse_identity(author_lines[0], b"author")
+        committer_identity = parse_identity(committer_lines[0], b"committer")
+        if author_identity != committer_identity:
+            raise AssertionError("commit author and committer identity differ")
+        assert len(parent_oids) == len(set(parent_oids))
+        return tree_oid, tuple(parent_oids), author_identity, message
+
+    assert git_output(repository, "rev-parse", "--is-shallow-repository") == b"false\n"
+    assert git_output(repository, "replace", "-l") == b""
+    git_dir = strict_path(
+        git_output(repository, "rev-parse", "--path-format=absolute", "--git-dir")
+    )
+    common_dir = strict_path(
+        git_output(repository, "rev-parse", "--path-format=absolute", "--git-common-dir")
+    )
+    objects_dir = strict_path(
+        git_output(repository, "rev-parse", "--path-format=absolute", "--git-path", "objects")
+    )
+    grafts_path = strict_path(
+        git_output(repository, "rev-parse", "--path-format=absolute", "--git-path", "info/grafts")
+    )
+    alternates_path = strict_path(
+        git_output(
+            repository,
+            "rev-parse",
+            "--path-format=absolute",
+            "--git-path",
+            "objects/info/alternates",
+        )
+    )
+    shallow_path = strict_path(
+        git_output(repository, "rev-parse", "--path-format=absolute", "--git-path", "shallow")
+    )
+    assert os.path.normcase(os.path.abspath(git_dir)) == os.path.normcase(
+        os.path.abspath(common_dir)
+    )
+    expected_objects_dir = common_dir / "objects"
+    assert os.path.normcase(os.path.abspath(objects_dir)) == os.path.normcase(
+        os.path.abspath(expected_objects_dir)
+    )
+    assert objects_dir.resolve().parent == common_dir.resolve()
+    assert not path_entry_is_redirect(common_dir)
+    assert not path_entry_is_redirect(objects_dir)
+    assert not path_entry_exists(grafts_path)
+    assert not path_entry_exists(alternates_path)
+    assert not path_entry_exists(shallow_path)
+
     raw_head_oid = strict_oid(git_output(repository, "rev-parse", "--verify", "HEAD"))
     head_oid = strict_oid(git_output(repository, "rev-parse", "--verify", "HEAD^{commit}"))
     assert raw_head_oid == head_oid
-    assert git_output(repository, "cat-file", "-t", head_oid) == b"commit\n"
+    if head_oid in PUBLIC_PROVENANCE_ROLE_TOKENS.values():
+        raise AssertionError("public provenance role token cannot identify HEAD")
 
-    commit_payload = git_output(repository, "cat-file", "commit", head_oid)
-    header_payload, separator, _message = commit_payload.partition(b"\n\n")
-    assert separator == b"\n\n"
-    header_lines = header_payload.splitlines()
-    assert header_lines
-    assert re.fullmatch(rb"tree [0-9a-f]{40}", header_lines[0]) is not None
-    assert sum(line.startswith(b"tree ") for line in header_lines) == 1
-
-    parent_oids: list[str] = []
-    for line in header_lines[1:]:
-        if line == b"parent" or line.startswith(b"parent "):
-            parent_match = re.fullmatch(rb"parent ([0-9a-f]{40})", line)
-            assert parent_match is not None
-            parent_oids.append(parent_match.group(1).decode("ascii"))
-    assert len(parent_oids) == len(set(parent_oids))
-
-    topology_match = re.fullmatch(
-        rb"([0-9a-f]{40}(?: [0-9a-f]{40})*)\n",
-        git_output(repository, "rev-list", "--parents", "-n", "1", head_oid),
+    ancestry_payload = git_output(repository, "rev-list", "--parents", "--topo-order", head_oid)
+    assert ancestry_payload.endswith(b"\n")
+    ancestry_lines = ancestry_payload[:-1].split(b"\n")
+    assert ancestry_lines and all(ancestry_lines)
+    ancestry: list[tuple[str, tuple[str, ...]]] = []
+    for line in ancestry_lines:
+        match = re.fullmatch(rb"([0-9a-f]{40}(?: [0-9a-f]{40})*)", line)
+        assert match is not None
+        fields = match.group(1).decode("ascii").split(" ")
+        oid, listed_parents = fields[0], tuple(fields[1:])
+        if oid in PUBLIC_PROVENANCE_ROLE_TOKENS.values() or any(
+            parent in PUBLIC_PROVENANCE_ROLE_TOKENS.values() for parent in listed_parents
+        ):
+            raise AssertionError("public provenance role token cannot enter Git ancestry")
+        ancestry.append((oid, listed_parents))
+    assert ancestry[0][0] == head_oid
+    assert len({oid for oid, _parents in ancestry}) == len(ancestry)
+    for index, (_oid, listed_parents) in enumerate(ancestry):
+        expected_parents = () if index == len(ancestry) - 1 else (ancestry[index + 1][0],)
+        assert listed_parents == expected_parents
+    root_oid = ancestry[-1][0]
+    roots_payload = git_output(repository, "rev-list", "--max-parents=0", head_oid)
+    assert roots_payload == root_oid.encode("ascii") + b"\n"
+    assert git_output(repository, "rev-list", "--count", head_oid) == (
+        f"{len(ancestry)}\n".encode("ascii")
     )
-    assert topology_match is not None
-    topology_oids = topology_match.group(1).decode("ascii").split(" ")
-    assert topology_oids[0] == head_oid
-    assert tuple(topology_oids[1:]) == tuple(parent_oids)
-    assert len(parent_oids) in (0, 1)
 
-    tree_paths = _nul_terminated_git_paths(
-        git_output(
-            repository,
-            "ls-tree",
-            "-r",
-            "--full-tree",
-            "--name-only",
-            "-z",
-            head_oid,
+    commit_contracts: dict[str, tuple[str, tuple[str, ...], tuple[bytes, bytes], bytes]] = {}
+    tree_paths_by_commit: dict[str, set[str]] = {}
+    for oid, listed_parents in ancestry:
+        contract = parse_commit(oid)
+        if contract[1] != listed_parents:
+            raise AssertionError("commit parent headers disagree with complete ancestry")
+        commit_contracts[oid] = contract
+        tree_paths_by_commit[oid] = _nul_terminated_git_paths(
+            git_output(
+                repository,
+                "ls-tree",
+                "-r",
+                "--full-tree",
+                "--name-only",
+                "-z",
+                oid,
+            )
         )
-    )
 
+    tree_paths = tree_paths_by_commit[head_oid]
+    parent_oids = ancestry[0][1]
+    changed_paths: set[str] = set()
     if parent_oids:
-        parent_oid = parent_oids[0]
-        resolved_parent_oid = strict_oid(
-            git_output(repository, "rev-parse", "--verify", f"{parent_oid}^{{commit}}")
-        )
-        assert resolved_parent_oid == parent_oid
-        parent_tree_oid = strict_oid(
-            git_output(repository, "rev-parse", "--verify", f"{parent_oid}^{{tree}}")
-        )
-        assert git_output(repository, "cat-file", "-t", parent_tree_oid) == b"tree\n"
         changed_paths = _nul_terminated_git_paths(
             git_output(
                 repository,
@@ -1096,10 +1225,13 @@ def _release_document_committed_candidate_paths(
                 "--name-only",
                 "-r",
                 "-z",
-                parent_oid,
+                parent_oids[0],
                 head_oid,
             )
         )
+
+    if root_oid != RC5_SANITIZED_PRODUCT_ROOT_OID:
+        assert len(parent_oids) == 1
         assert changed_paths
         assert len(tree_paths) == RC5_SOURCE_TRACKED_PATH_COUNT
         assert _path_set_sha256(tree_paths) == RC5_SOURCE_PATH_SET_SHA256
@@ -1108,6 +1240,12 @@ def _release_document_committed_candidate_paths(
         assert set(RC5_INTERNAL_EXCLUDE_PATHS) <= tree_paths
         return "FULL_PRIVATE_SOURCE_ONE_PARENT", tree_paths, changed_paths
 
+    root_tree_paths = tree_paths_by_commit[root_oid]
+    assert len(root_tree_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
+    assert _path_set_sha256(root_tree_paths) == RC5_PRODUCT_PATH_SET_SHA256
+    assert set(RC5_PRODUCT_APPLICABLE_REMEDIATION_PATHS) <= root_tree_paths
+    assert set(RC5_INTERNAL_ONLY_REMEDIATION_PATHS).isdisjoint(root_tree_paths)
+    assert set(RC5_INTERNAL_EXCLUDE_PATHS).isdisjoint(root_tree_paths)
     introduction_payload = git_output(
         repository,
         "diff-tree",
@@ -1116,7 +1254,7 @@ def _release_document_committed_candidate_paths(
         "--name-status",
         "-r",
         "-z",
-        head_oid,
+        root_oid,
     )
     assert introduction_payload.endswith(b"\0")
     introduction_fields = introduction_payload[:-1].split(b"\0")
@@ -1127,13 +1265,65 @@ def _release_document_committed_candidate_paths(
     ]
     assert all(introduced_paths)
     assert len(introduced_paths) == len(set(introduced_paths))
-    assert set(introduced_paths) == tree_paths
-    assert len(tree_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
-    assert _path_set_sha256(tree_paths) == RC5_PRODUCT_PATH_SET_SHA256
-    assert set(RC5_PRODUCT_APPLICABLE_REMEDIATION_PATHS) <= tree_paths
-    assert set(RC5_INTERNAL_ONLY_REMEDIATION_PATHS).isdisjoint(tree_paths)
-    assert set(RC5_INTERNAL_EXCLUDE_PATHS).isdisjoint(tree_paths)
-    return "SANITIZED_PRODUCT_ZERO_PARENT_ROOT", tree_paths, set()
+    assert set(introduced_paths) == root_tree_paths
+
+    root_identity = commit_contracts[root_oid][2]
+    root_name, root_email = root_identity
+    assert root_name
+    assert (
+        re.fullmatch(
+            rb"(?:[0-9]+\+)?[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?"
+            rb"@users\.noreply\.github\.com",
+            root_email,
+            flags=re.IGNORECASE,
+        )
+        is not None
+    )
+    for oid, _listed_parents in ancestry:
+        _tree_oid, _parents, identity, message = commit_contracts[oid]
+        if identity != root_identity:
+            raise AssertionError("public descendant identity differs from sanitized root")
+        if _privacy_scan_counts({"public-commit-message": message}) != ZERO_PRIVACY_COUNTS:
+            raise AssertionError("public commit message privacy contract failed")
+        if re.search(rb"(?<![0-9a-f])[0-9a-f]{40}(?![0-9a-f])", message) is not None:
+            raise AssertionError("public commit message contains a raw Git identity")
+        if re.search(rb"\bPSC-[0-9]{2}\b", message) is not None:
+            raise AssertionError("public commit message contains a controlled-source label")
+        public_tree_paths = tree_paths_by_commit[oid]
+        assert set(RC5_PRODUCT_APPLICABLE_REMEDIATION_PATHS) <= public_tree_paths
+        assert set(RC5_INTERNAL_ONLY_REMEDIATION_PATHS).isdisjoint(public_tree_paths)
+        assert set(RC5_INTERNAL_EXCLUDE_PATHS).isdisjoint(public_tree_paths)
+    if len(ancestry) > 1:
+        ancestry_changed_paths = _nul_terminated_git_paths(
+            git_output(
+                repository,
+                "diff-tree",
+                "--no-commit-id",
+                "--name-only",
+                "-r",
+                "-z",
+                root_oid,
+                head_oid,
+            )
+        )
+        if len(ancestry) == 2 and tree_paths == root_tree_paths:
+            assert ancestry_changed_paths in (set(), {RC5_SELF_HOSTING_REPAIR_PATH})
+        else:
+            assert ancestry_changed_paths
+    if changed_paths:
+        _assert_privacy_scan_clean(
+            {
+                "public-descendant-paths": b"\0".join(
+                    path.encode("utf-8", errors="strict") for path in sorted(changed_paths)
+                )
+            }
+        )
+
+    if head_oid == root_oid:
+        assert len(ancestry) == 1 and not parent_oids
+        return "SANITIZED_PRODUCT_ZERO_PARENT_ROOT", tree_paths, set()
+    assert parent_oids
+    return "SANITIZED_PRODUCT_LINEAR_DESCENDANT", tree_paths, changed_paths
 
 
 def _nul_terminated_git_paths(payload: bytes) -> set[str]:
@@ -1548,34 +1738,31 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     if commit_model == "FULL_PRIVATE_SOURCE_ONE_PARENT":
         assert len(tracked_paths) == RC5_SOURCE_TRACKED_PATH_COUNT
         assert all((REPOSITORY_ROOT / path).is_file() for path in RC5_INTERNAL_EXCLUDE_PATHS)
-        source_subject = _git_output(REPOSITORY_ROOT, "show", "-s", "--format=%s", "HEAD")
         if substantive_candidate_paths:
             assert substantive_candidate_paths == repair_paths
             assert committed_candidate_paths == source_remediation_paths
-            assert source_subject == RC5_OPENING_SOURCE_COMMIT_SUBJECT.encode("utf-8") + b"\n"
-        elif committed_candidate_paths == source_remediation_paths:
-            assert source_subject == RC5_OPENING_SOURCE_COMMIT_SUBJECT.encode("utf-8") + b"\n"
         else:
-            assert committed_candidate_paths == repair_paths
-            assert source_subject == (
-                RC5_SELF_HOSTING_REPAIR_COMMIT_SUBJECT.encode("utf-8") + b"\n"
-            )
-    else:
-        assert commit_model == "SANITIZED_PRODUCT_ZERO_PARENT_ROOT"
+            assert committed_candidate_paths in (source_remediation_paths, repair_paths)
+    elif commit_model == "SANITIZED_PRODUCT_ZERO_PARENT_ROOT":
         assert len(tracked_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
         assert committed_candidate_paths == set()
+        assert substantive_candidate_paths in (set(), repair_paths)
+        assert all(not (REPOSITORY_ROOT / path).exists() for path in RC5_INTERNAL_EXCLUDE_PATHS)
+    else:
+        assert commit_model == "SANITIZED_PRODUCT_LINEAR_DESCENDANT"
+        assert len(tracked_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
+        assert committed_candidate_paths in (set(), repair_paths)
         assert substantive_candidate_paths == set()
         assert all(not (REPOSITORY_ROOT / path).exists() for path in RC5_INTERNAL_EXCLUDE_PATHS)
     assert set(PROTECTED_DOCUMENT_BLOB_CONTRACT).isdisjoint(source_remediation_paths)
     _assert_rc5_public_provenance_role_token_contract()
 
-    scripted_head_oid = "1" * 40
-    scripted_parent_oid = "2" * 40
+    scripted_child_one_oid = "1" * 40
+    scripted_child_two_oid = "2" * 40
     scripted_second_parent_oid = "3" * 40
-    scripted_tree_oid = "4" * 40
-    scripted_parent_tree_oid = "5" * 40
-    scripted_depth_two_parent_oid = "6" * 40
-    scripted_full_history_parent_oid = "7" * 40
+    scripted_private_head_oid = "4" * 40
+    scripted_private_root_oid = "5" * 40
+    scripted_unrelated_root_oid = "6" * 40
     internal_exclude_paths = set(RC5_INTERNAL_EXCLUDE_PATHS)
     if commit_model == "FULL_PRIVATE_SOURCE_ONE_PARENT":
         scripted_source_paths = set(tracked_paths)
@@ -1592,47 +1779,104 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     def encoded_paths(paths: set[str]) -> bytes:
         return b"".join(path.encode("utf-8", errors="strict") + b"\0" for path in sorted(paths))
 
-    def scripted_responses(
+    scripted_git_dir = (tmp_path / ".git").absolute()
+    scripted_objects_dir = scripted_git_dir / "objects"
+    scripted_grafts_path = scripted_git_dir / "info/grafts"
+    scripted_alternates_path = scripted_objects_dir / "info/alternates"
+    scripted_shallow_path = scripted_git_dir / "shallow"
+    scripted_public_name = b"Synthetic Product Identity"
+    scripted_public_email = b"synthetic-audit" + b"@" + b"users.noreply.github.com"
+
+    def encoded_path(path: Path) -> bytes:
+        return str(path).encode("utf-8", errors="strict") + b"\n"
+
+    def scripted_commit_payload(
+        oid: str,
         parent_oids: tuple[str, ...],
-        repository_paths: set[str],
+        *,
+        message: bytes = b"scripted commit\n",
+        identity: tuple[bytes, bytes] | None = None,
+    ) -> bytes:
+        name, email = identity or (scripted_public_name, scripted_public_email)
+        tree_oid = hashlib.sha256(("tree:" + oid).encode("ascii")).hexdigest()[:40]
+        parent_headers = b"".join(
+            b"parent " + parent_oid.encode("ascii") + b"\n" for parent_oid in parent_oids
+        )
+        return b"".join(
+            (
+                b"tree " + tree_oid.encode("ascii") + b"\n",
+                parent_headers,
+                b"author " + name + b" <" + email + b"> 0 +0000\n",
+                b"committer " + name + b" <" + email + b"> 0 +0000\n\n",
+                message,
+            )
+        )
+
+    def scripted_responses(
+        chain: tuple[tuple[str, tuple[str, ...], set[str]], ...],
         *,
         changed_paths: set[str] | None = None,
+        messages: Mapping[str, bytes] | None = None,
+        identities: Mapping[str, tuple[bytes, bytes]] | None = None,
     ) -> dict[tuple[str, ...], bytes]:
-        parent_headers = "".join(f"parent {parent_oid}\n" for parent_oid in parent_oids)
-        commit_payload = (
-            f"tree {scripted_tree_oid}\n"
-            f"{parent_headers}"
-            "author Test <test.invalid> 0 +0000\n"
-            "committer Test <test.invalid> 0 +0000\n\n"
-            "scripted commit\n"
-        ).encode("ascii")
+        assert chain
+        head_oid = chain[0][0]
+        root_oid = chain[-1][0]
+        message_map = {} if messages is None else dict(messages)
+        identity_map = {} if identities is None else dict(identities)
         responses = {
-            ("rev-parse", "--verify", "HEAD"): f"{scripted_head_oid}\n".encode("ascii"),
-            ("rev-parse", "--verify", "HEAD^{commit}"): (f"{scripted_head_oid}\n".encode("ascii")),
-            ("cat-file", "-t", scripted_head_oid): b"commit\n",
-            ("cat-file", "commit", scripted_head_oid): commit_payload,
-            ("rev-list", "--parents", "-n", "1", scripted_head_oid): (
-                f"{scripted_head_oid}{''.join(f' {parent_oid}' for parent_oid in parent_oids)}\n"
-            ).encode("ascii"),
+            ("rev-parse", "--is-shallow-repository"): b"false\n",
+            ("replace", "-l"): b"",
+            ("rev-parse", "--path-format=absolute", "--git-dir"): encoded_path(scripted_git_dir),
+            ("rev-parse", "--path-format=absolute", "--git-common-dir"): encoded_path(
+                scripted_git_dir
+            ),
+            ("rev-parse", "--path-format=absolute", "--git-path", "objects"): encoded_path(
+                scripted_objects_dir
+            ),
+            ("rev-parse", "--path-format=absolute", "--git-path", "info/grafts"): encoded_path(
+                scripted_grafts_path
+            ),
             (
-                "ls-tree",
-                "-r",
-                "--full-tree",
-                "--name-only",
-                "-z",
-                scripted_head_oid,
-            ): encoded_paths(repository_paths),
+                "rev-parse",
+                "--path-format=absolute",
+                "--git-path",
+                "objects/info/alternates",
+            ): encoded_path(scripted_alternates_path),
+            ("rev-parse", "--path-format=absolute", "--git-path", "shallow"): encoded_path(
+                scripted_shallow_path
+            ),
+            ("rev-parse", "--verify", "HEAD"): f"{head_oid}\n".encode("ascii"),
+            ("rev-parse", "--verify", "HEAD^{commit}"): f"{head_oid}\n".encode("ascii"),
+            ("rev-list", "--parents", "--topo-order", head_oid): b"".join(
+                (oid + "".join(f" {parent_oid}" for parent_oid in parent_oids) + "\n").encode(
+                    "ascii"
+                )
+                for oid, parent_oids, _paths in chain
+            ),
+            ("rev-list", "--max-parents=0", head_oid): f"{root_oid}\n".encode("ascii"),
+            ("rev-list", "--count", head_oid): f"{len(chain)}\n".encode("ascii"),
         }
-        if len(parent_oids) == 1:
-            parent_oid = parent_oids[0]
-            scripted_changed_paths = repair_paths if changed_paths is None else changed_paths
-            responses[("rev-parse", "--verify", f"{parent_oid}^{{commit}}")] = (
-                f"{parent_oid}\n".encode("ascii")
+        for oid, parent_oids, repository_paths in chain:
+            responses[("cat-file", "-t", oid)] = b"commit\n"
+            responses[("cat-file", "commit", oid)] = scripted_commit_payload(
+                oid,
+                parent_oids,
+                message=message_map.get(oid, b"scripted commit\n"),
+                identity=identity_map.get(oid),
             )
-            responses[("rev-parse", "--verify", f"{parent_oid}^{{tree}}")] = (
-                f"{scripted_parent_tree_oid}\n".encode("ascii")
-            )
-            responses[("cat-file", "-t", scripted_parent_tree_oid)] = b"tree\n"
+            responses[
+                (
+                    "ls-tree",
+                    "-r",
+                    "--full-tree",
+                    "--name-only",
+                    "-z",
+                    oid,
+                )
+            ] = encoded_paths(repository_paths)
+        head_parents = chain[0][1]
+        if head_parents:
             responses[
                 (
                     "diff-tree",
@@ -1640,11 +1884,24 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
                     "--name-only",
                     "-r",
                     "-z",
-                    parent_oid,
-                    scripted_head_oid,
+                    head_parents[0],
+                    head_oid,
                 )
-            ] = encoded_paths(scripted_changed_paths)
-        if not parent_oids:
+            ] = encoded_paths(repair_paths if changed_paths is None else changed_paths)
+        if root_oid == RC5_SANITIZED_PRODUCT_ROOT_OID:
+            root_paths = chain[-1][2]
+            if len(chain) > 1:
+                responses[
+                    (
+                        "diff-tree",
+                        "--no-commit-id",
+                        "--name-only",
+                        "-r",
+                        "-z",
+                        root_oid,
+                        head_oid,
+                    )
+                ] = encoded_paths(repair_paths if changed_paths is None else changed_paths)
             responses[
                 (
                     "diff-tree",
@@ -1653,11 +1910,11 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
                     "--name-status",
                     "-r",
                     "-z",
-                    scripted_head_oid,
+                    root_oid,
                 )
             ] = b"".join(
                 b"A\0" + path.encode("utf-8", errors="strict") + b"\0"
-                for path in sorted(repository_paths)
+                for path in sorted(root_paths)
             )
         return responses
 
@@ -1667,6 +1924,8 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
         responses: Mapping[tuple[str, ...], bytes],
         *,
         fail_on: tuple[str, ...] | None = None,
+        existing_paths: frozenset[Path] = frozenset(),
+        redirected_paths: frozenset[Path] = frozenset(),
     ) -> tuple[tuple[str, set[str], set[str]], list[tuple[str, ...]]]:
         calls: list[tuple[str, ...]] = []
 
@@ -1686,13 +1945,21 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
         result = _release_document_committed_candidate_paths(
             tmp_path,
             git_output=scripted_git_output,
+            path_entry_exists=lambda path: path in existing_paths,
+            path_entry_is_redirect=lambda path: path in redirected_paths,
         )
         return result, calls
 
     # 1. The exact full private source child is accepted.
     current_source_responses = scripted_responses(
-        (scripted_parent_oid,),
-        scripted_source_paths,
+        (
+            (
+                scripted_private_head_oid,
+                (scripted_private_root_oid,),
+                scripted_source_paths,
+            ),
+            (scripted_private_root_oid, (), scripted_source_paths),
+        ),
         changed_paths=source_remediation_paths,
     )
     (current_source_model, current_source_tree, current_source_changes), child_calls = run_script(
@@ -1701,24 +1968,23 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     assert current_source_model == "FULL_PRIVATE_SOURCE_ONE_PARENT"
     assert current_source_tree == scripted_source_paths
     assert current_source_changes == source_remediation_paths
-    assert set(child_calls) == set(current_source_responses)
     assert child_calls[-1] == (
         "diff-tree",
         "--no-commit-id",
         "--name-only",
         "-r",
         "-z",
-        scripted_parent_oid,
-        scripted_head_oid,
+        scripted_private_root_oid,
+        scripted_private_head_oid,
     )
 
     # 2. The exact sanitized zero-parent product root is accepted.
-    root_responses = scripted_responses((), scripted_product_paths)
+    root_chain = ((RC5_SANITIZED_PRODUCT_ROOT_OID, (), scripted_product_paths),)
+    root_responses = scripted_responses(root_chain)
     (root_model, root_tree, root_changes), root_calls = run_script(root_responses)
     assert root_model == "SANITIZED_PRODUCT_ZERO_PARENT_ROOT"
     assert root_tree == scripted_product_paths
     assert root_changes == set()
-    assert set(root_calls) == set(root_responses)
     assert (
         "diff-tree",
         "--root",
@@ -1726,27 +1992,93 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
         "--name-status",
         "-r",
         "-z",
-        scripted_head_oid,
+        RC5_SANITIZED_PRODUCT_ROOT_OID,
     ) in root_calls
 
-    # 3. A product root containing one internal-only path fails closed.
+    # 3. One ordinary same-tree public child is accepted.
+    one_child_chain = (
+        (scripted_child_one_oid, (RC5_SANITIZED_PRODUCT_ROOT_OID,), scripted_product_paths),
+        *root_chain,
+    )
+    one_child_responses = scripted_responses(one_child_chain, changed_paths=set())
+    (one_child_model, one_child_tree, one_child_changes), _one_child_calls = run_script(
+        one_child_responses
+    )
+    assert one_child_model == "SANITIZED_PRODUCT_LINEAR_DESCENDANT"
+    assert one_child_tree == scripted_product_paths
+    assert one_child_changes == set()
+
+    # 4. One changed public child is accepted.
+    changed_child_responses = scripted_responses(one_child_chain, changed_paths=repair_paths)
+    (changed_child_model, _changed_child_tree, changed_child_paths), _changed_child_calls = (
+        run_script(changed_child_responses)
+    )
+    assert changed_child_model == "SANITIZED_PRODUCT_LINEAR_DESCENDANT"
+    assert changed_child_paths == repair_paths
+
+    # 5. Two successive ordinary public children are accepted without a depth limit.
+    two_child_chain = (
+        (scripted_child_two_oid, (scripted_child_one_oid,), scripted_product_paths),
+        *one_child_chain,
+    )
+    two_child_responses = scripted_responses(two_child_chain, changed_paths=repair_paths)
+    (two_child_model, two_child_tree, two_child_changes), _two_child_calls = run_script(
+        two_child_responses
+    )
+    assert two_child_model == "SANITIZED_PRODUCT_LINEAR_DESCENDANT"
+    assert two_child_tree == scripted_product_paths
+    assert two_child_changes == repair_paths
+
+    # 6. A product root containing one internal-only path fails closed.
     product_plus_internal_only = scripted_product_paths | {RC5_INTERNAL_ONLY_REMEDIATION_PATHS[0]}
     with pytest.raises(AssertionError):
-        run_script(scripted_responses((), product_plus_internal_only))
+        run_script(
+            scripted_responses(((RC5_SANITIZED_PRODUCT_ROOT_OID, (), product_plus_internal_only),))
+        )
 
-    # 4. A product root missing one product-applicable path fails closed.
+    # 7. A product root missing one product-applicable path fails closed.
     product_missing_applicable = scripted_product_paths - {
         RC5_PRODUCT_APPLICABLE_REMEDIATION_PATHS[0]
     }
     with pytest.raises(AssertionError):
-        run_script(scripted_responses((), product_missing_applicable))
+        run_script(
+            scripted_responses(((RC5_SANITIZED_PRODUCT_ROOT_OID, (), product_missing_applicable),))
+        )
 
-    # 5. A source child missing one internal-only path fails closed.
+    # 8. A public descendant containing one internal-only path fails closed.
+    descendant_plus_internal = scripted_product_paths | {RC5_INTERNAL_EXCLUDE_PATHS[0]}
+    with pytest.raises(AssertionError):
+        run_script(
+            scripted_responses(
+                (
+                    (
+                        scripted_child_one_oid,
+                        (RC5_SANITIZED_PRODUCT_ROOT_OID,),
+                        descendant_plus_internal,
+                    ),
+                    *root_chain,
+                ),
+                changed_paths={RC5_INTERNAL_EXCLUDE_PATHS[0]},
+            )
+        )
+
+    # 9. A source child missing one internal-only path fails closed.
     source_missing_internal_only = scripted_source_paths - {RC5_INTERNAL_ONLY_REMEDIATION_PATHS[0]}
     with pytest.raises(AssertionError):
-        run_script(scripted_responses((scripted_parent_oid,), source_missing_internal_only))
+        run_script(
+            scripted_responses(
+                (
+                    (
+                        scripted_private_head_oid,
+                        (scripted_private_root_oid,),
+                        source_missing_internal_only,
+                    ),
+                    (scripted_private_root_oid, (), source_missing_internal_only),
+                )
+            )
+        )
 
-    # 6. A source child with the wrong total path partition fails closed.
+    # 10. A source child with the wrong total path partition fails closed.
     replaceable_source_paths = (
         scripted_source_paths - source_remediation_paths - internal_exclude_paths
     )
@@ -1756,65 +2088,184 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
         "unexpected/source-partition-path.txt"
     }
     with pytest.raises(AssertionError):
-        run_script(scripted_responses((scripted_parent_oid,), wrong_source_partition))
+        run_script(
+            scripted_responses(
+                (
+                    (
+                        scripted_private_head_oid,
+                        (scripted_private_root_oid,),
+                        wrong_source_partition,
+                    ),
+                    (scripted_private_root_oid, (), wrong_source_partition),
+                )
+            )
+        )
 
-    # 7. A depth-1 shallow child whose immediate parent is unavailable fails closed.
-    shallow_responses = scripted_responses((scripted_parent_oid,), scripted_source_paths)
-    del shallow_responses[("rev-parse", "--verify", f"{scripted_parent_oid}^{{commit}}")]
+    # 11. An explicitly shallow repository fails closed before ancestry interpretation.
+    shallow_responses = dict(one_child_responses)
+    shallow_responses[("rev-parse", "--is-shallow-repository")] = b"true\n"
     with pytest.raises(AssertionError):
         run_script(shallow_responses)
 
-    # 8. A depth-2 child with its immediate parent commit and tree available is accepted.
-    depth_two_responses = scripted_responses(
-        (scripted_depth_two_parent_oid,), scripted_source_paths
+    # 12. Incomplete ancestry fails closed even if the shallow flag is false.
+    incomplete_responses = dict(one_child_responses)
+    incomplete_responses[("rev-list", "--parents", "--topo-order", scripted_child_one_oid)] = (
+        f"{scripted_child_one_oid} {RC5_SANITIZED_PRODUCT_ROOT_OID}\n".encode("ascii")
     )
-    (depth_two_model, depth_two_tree, _depth_two_changes), _depth_two_calls = run_script(
-        depth_two_responses
-    )
-    assert depth_two_model == "FULL_PRIVATE_SOURCE_ONE_PARENT"
-    assert depth_two_tree == scripted_source_paths
-    assert set(_depth_two_calls) == set(depth_two_responses)
+    with pytest.raises(AssertionError):
+        run_script(incomplete_responses)
 
-    # 9. A full-history one-parent child is accepted.
-    full_history_responses = scripted_responses(
-        (scripted_full_history_parent_oid,), scripted_source_paths
-    )
-    (full_history_model, full_history_tree, _full_history_changes), _full_history_calls = (
-        run_script(full_history_responses)
-    )
-    assert full_history_model == "FULL_PRIVATE_SOURCE_ONE_PARENT"
-    assert full_history_tree == scripted_source_paths
-    assert set(_full_history_calls) == set(full_history_responses)
-
-    # 10. A merge fails closed.
-    merge_responses = scripted_responses(
-        (scripted_parent_oid, scripted_second_parent_oid), scripted_source_paths
-    )
+    # 13. A merge at HEAD fails closed.
+    merge_responses = dict(one_child_responses)
+    merge_responses[("rev-list", "--parents", "--topo-order", scripted_child_one_oid)] = (
+        f"{scripted_child_one_oid} {RC5_SANITIZED_PRODUCT_ROOT_OID} "
+        f"{scripted_second_parent_oid}\n"
+        f"{RC5_SANITIZED_PRODUCT_ROOT_OID}\n"
+        f"{scripted_second_parent_oid}\n"
+    ).encode("ascii")
     with pytest.raises(AssertionError):
         run_script(merge_responses)
 
-    # 11. A missing or invalid HEAD fails closed.
+    # 14. A merge hidden below HEAD also fails closed.
+    inner_merge_responses = dict(two_child_responses)
+    inner_merge_responses[("rev-list", "--parents", "--topo-order", scripted_child_two_oid)] = (
+        f"{scripted_child_two_oid} {scripted_child_one_oid}\n"
+        f"{scripted_child_one_oid} {RC5_SANITIZED_PRODUCT_ROOT_OID} "
+        f"{scripted_second_parent_oid}\n"
+        f"{RC5_SANITIZED_PRODUCT_ROOT_OID}\n"
+        f"{scripted_second_parent_oid}\n"
+    ).encode("ascii")
     with pytest.raises(AssertionError):
-        run_script({})
+        run_script(inner_merge_responses)
 
-    non_commit_responses = scripted_responses((), scripted_product_paths)
-    non_commit_responses[("cat-file", "-t", scripted_head_oid)] = b"blob\n"
+    # 15. Missing, unborn, or non-commit HEAD fails closed.
+    state_only_responses: dict[tuple[str, ...], bytes] = {
+        key: value
+        for key, value in root_responses.items()
+        if key
+        in {
+            ("rev-parse", "--is-shallow-repository"),
+            ("replace", "-l"),
+            ("rev-parse", "--path-format=absolute", "--git-dir"),
+            ("rev-parse", "--path-format=absolute", "--git-common-dir"),
+            ("rev-parse", "--path-format=absolute", "--git-path", "objects"),
+            ("rev-parse", "--path-format=absolute", "--git-path", "info/grafts"),
+            (
+                "rev-parse",
+                "--path-format=absolute",
+                "--git-path",
+                "objects/info/alternates",
+            ),
+            ("rev-parse", "--path-format=absolute", "--git-path", "shallow"),
+        }
+    }
+    with pytest.raises(AssertionError):
+        run_script(state_only_responses)
+
+    unborn_responses = dict(root_responses)
+    unborn_responses[("rev-parse", "--verify", "HEAD")] = b"HEAD\n"
+    with pytest.raises(AssertionError):
+        run_script(unborn_responses)
+
+    non_commit_responses = dict(root_responses)
+    non_commit_responses[("cat-file", "-t", RC5_SANITIZED_PRODUCT_ROOT_OID)] = b"blob\n"
     with pytest.raises(AssertionError):
         run_script(non_commit_responses)
 
-    # 12. An arbitrary Git error fails closed.
+    # 16. An arbitrary Git error fails closed.
     arbitrary_git_error_call = (
         "ls-tree",
         "-r",
         "--full-tree",
         "--name-only",
         "-z",
-        scripted_head_oid,
+        RC5_SANITIZED_PRODUCT_ROOT_OID,
     )
     with pytest.raises(RuntimeError, match="scripted arbitrary Git error"):
         run_script(root_responses, fail_on=arbitrary_git_error_call)
 
-    # 13. No frozen public-provenance role token is ever supplied to Git.
+    # 17. Replace refs, grafts, alternates, and a redirected object store fail closed.
+    replace_responses = dict(root_responses)
+    replace_responses[("replace", "-l")] = b"refs/replace/synthetic\n"
+    with pytest.raises(AssertionError):
+        run_script(replace_responses)
+    with pytest.raises(AssertionError):
+        run_script(root_responses, existing_paths=frozenset({scripted_grafts_path}))
+    with pytest.raises(AssertionError):
+        run_script(root_responses, existing_paths=frozenset({scripted_alternates_path}))
+    with pytest.raises(AssertionError):
+        run_script(root_responses, redirected_paths=frozenset({scripted_objects_dir}))
+    alternate_store_responses = dict(root_responses)
+    alternate_store_responses[("rev-parse", "--path-format=absolute", "--git-path", "objects")] = (
+        encoded_path((tmp_path / "external-object-store").absolute())
+    )
+    with pytest.raises(AssertionError):
+        run_script(alternate_store_responses)
+
+    # 18. An unrelated or ambiguous root fails closed even with the product path set.
+    unrelated_root_responses = scripted_responses(
+        ((scripted_unrelated_root_oid, (), scripted_product_paths),)
+    )
+    with pytest.raises(AssertionError):
+        run_script(unrelated_root_responses)
+    multiple_root_responses = dict(one_child_responses)
+    multiple_root_responses[("rev-list", "--max-parents=0", scripted_child_one_oid)] = (
+        f"{RC5_SANITIZED_PRODUCT_ROOT_OID}\n{scripted_unrelated_root_oid}\n".encode("ascii")
+    )
+    with pytest.raises(AssertionError):
+        run_script(multiple_root_responses)
+
+    # 19. Controlled-source recurrence and non-public descendant identities fail closed.
+    psc_message = b"controlled-source " + b"PSC" + b"-01\n"
+    psc_responses = scripted_responses(
+        root_chain,
+        messages={RC5_SANITIZED_PRODUCT_ROOT_OID: psc_message},
+    )
+    with pytest.raises(AssertionError):
+        run_script(psc_responses)
+    private_email = b"synthetic-private" + b"@" + b"example.invalid"
+    private_email_responses = scripted_responses(
+        one_child_chain,
+        identities={scripted_child_one_oid: (scripted_public_name, private_email)},
+    )
+    with pytest.raises(AssertionError):
+        run_script(private_email_responses)
+    private_identity_responses = scripted_responses(
+        one_child_chain,
+        identities={scripted_child_one_oid: (b"Different Identity", scripted_public_email)},
+    )
+    with pytest.raises(AssertionError):
+        run_script(private_identity_responses)
+
+    # 20. No frozen public-provenance role token is accepted or supplied to Git.
+    scripted_role_token = next(iter(PUBLIC_PROVENANCE_ROLE_TOKENS.values()))
+    role_token_responses = dict(state_only_responses)
+    role_token_responses[("rev-parse", "--verify", "HEAD")] = (
+        scripted_role_token.encode("ascii") + b"\n"
+    )
+    role_token_responses[("rev-parse", "--verify", "HEAD^{commit}")] = (
+        scripted_role_token.encode("ascii") + b"\n"
+    )
+    with pytest.raises(AssertionError):
+        run_script(role_token_responses)
+    role_token_tree_responses = dict(root_responses)
+    role_token_tree_responses[("cat-file", "commit", RC5_SANITIZED_PRODUCT_ROOT_OID)] = (
+        b"tree "
+        + scripted_role_token.encode("ascii")
+        + b"\n"
+        + b"author "
+        + scripted_public_name
+        + b" <"
+        + scripted_public_email
+        + b"> 0 +0000\n"
+        + b"committer "
+        + scripted_public_name
+        + b" <"
+        + scripted_public_email
+        + b"> 0 +0000\n\nscripted commit\n"
+    )
+    with pytest.raises(AssertionError):
+        run_script(role_token_tree_responses)
     role_token_occurrences = sum(
         argument.count(token)
         for arguments in all_scripted_calls
