@@ -81,6 +81,22 @@ jobs:
           from email.parser import BytesParser
           from pathlib import Path
 
+          def canonical_specifier_set(value):
+              """Canonicalize a PEP 440 specifier set for comparison.
+
+              Requires-Python is a specifier set, not an ordered string: the build
+              backend may reorder clauses or vary the whitespace around them without
+              changing the constraint. Compare the set of whitespace-stripped clauses
+              so that serialization differences cannot fail an otherwise exact match.
+              """
+              return frozenset(
+                  clause.replace(" ", "")
+                  for clause in (value or "").split(",")
+                  if clause.strip()
+              )
+
+          expected_requires_python = canonical_specifier_set(">=3.12,<3.13")
+
           workspace = Path(os.environ["GITHUB_WORKSPACE"])
           build_output = workspace / "build-output"
           upload = workspace / "upload"
@@ -120,6 +136,7 @@ jobs:
               if filename.endswith(".whl"):
                   with zipfile.ZipFile(artifact) as archive:
                       members = archive.namelist()
+                      counted_members = members
                       metadata_members = [
                           name for name in members if name.endswith(".dist-info/METADATA")
                       ]
@@ -129,6 +146,12 @@ jobs:
               else:
                   with tarfile.open(artifact) as archive:
                       members = archive.getnames()
+                      # SDIST_MEMBER_COUNT is the frozen count of regular file members.
+                      # getnames() also reports directory entries, which are not part of
+                      # that authority, so the count is taken over regular files only.
+                      counted_members = [
+                          member.name for member in archive.getmembers() if member.isfile()
+                      ]
                       pkg_info_members = [
                           name for name in members if name.endswith("/PKG-INFO")
                       ]
@@ -138,21 +161,26 @@ jobs:
                       if extracted is None:
                           raise SystemExit("Unreadable sdist PKG-INFO member.")
                       metadata = BytesParser().parsebytes(extracted.read())
-              if len(members) != want_members:
-                  raise SystemExit(f"{filename}: {len(members)} members, expected {want_members}")
+              if len(counted_members) != want_members:
+                  raise SystemExit(
+                      f"{filename}: {len(counted_members)} members, expected {want_members}"
+                  )
               if metadata.get("Name") != project_name:
                   raise SystemExit(f"{filename}: metadata Name is {metadata.get('Name')!r}")
               if metadata.get("Version") != version:
                   raise SystemExit(f"{filename}: metadata Version is {metadata.get('Version')!r}")
-              if metadata.get("Requires-Python") != ">=3.12,<3.13":
-                  raise SystemExit(f"{filename}: unexpected Requires-Python")
+              if canonical_specifier_set(metadata.get("Requires-Python")) != expected_requires_python:
+                  raise SystemExit(
+                      f"{filename}: unexpected Requires-Python "
+                      f"{metadata.get('Requires-Python')!r}"
+                  )
               if any(name.startswith("/") or ".." in name.split("/") for name in members):
                   raise SystemExit(f"{filename}: unsafe member path")
               if any(".git/" in name or name.endswith("/.git") for name in members):
                   raise SystemExit(f"{filename}: unexpected Git material")
               if any(name.split("/")[-1].startswith("tests") for name in members):
                   raise SystemExit(f"{filename}: unexpected test material")
-              print(f"{filename} {len(payload)} {digest} members={len(members)}")
+              print(f"{filename} {len(payload)} {digest} members={len(counted_members)}")
               shutil.copy2(artifact, upload / filename)
 
           staged = sorted(path.name for path in upload.iterdir())

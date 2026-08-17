@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import ast
+import contextlib
 import hashlib
+import io
 import json
 import os
 import re
@@ -521,6 +523,45 @@ PUBLISH_WORKFLOW_PATH = ".github/workflows/publish-pypi.yml"
 DISTRIBUTION_INFRASTRUCTURE_CHANGED_PATHS = (
     PUBLISH_WORKFLOW_PATH,
     RC5_SELF_HOSTING_REPAIR_PATH,
+)
+PUBLISH_WORKFLOW_VERIFICATION_STEP = "Verify the exact artifacts and stage them for upload"
+# The publishing workflow's job env declares the frozen D022 governance-build artifact
+# identity. Those values authorize the only bytes the workflow may ever upload, so the
+# release contract restates them and requires the workflow to declare exactly this set.
+PUBLISH_WORKFLOW_ARTIFACT_AUTHORITY = {
+    "PROJECT_NAME": "research-decision-engine",
+    "RELEASE_COMMIT": "e73a65a2f39e96791dbf8f2458e1afc35a30b1c5",
+    "RELEASE_TAG": "v1.0.0rc5",
+    "RELEASE_VERSION": "1.0.0rc5",
+    "SDIST_BYTES": "901294",
+    "SDIST_MEMBER_COUNT": "121",
+    "SDIST_NAME": "research_decision_engine-1.0.0rc5.tar.gz",
+    "SDIST_SHA256": "f3c6dfeee28ca643c0777deb5c062473f79319b0fa8fe8f50c0e5cda6e139f8b",
+    "SOURCE_DATE_EPOCH": "1786313084",
+    "WHEEL_BYTES": "871899",
+    "WHEEL_MEMBER_COUNT": "104",
+    "WHEEL_NAME": "research_decision_engine-1.0.0rc5-py3-none-any.whl",
+    "WHEEL_SHA256": "d4819d5811b4b21c71581301bb82b800b095664bf3143f0354393f76608a318e",
+}
+# Requires-Python is a specifier set. pyproject.toml declares it without whitespace and the
+# uv build backend serializes it into METADATA and PKG-INFO as ">=3.12, <3.13", so the
+# workflow must compare the constraint canonically rather than by serialized text.
+PUBLISH_WORKFLOW_REQUIRES_PYTHON = ">=3.12,<3.13"
+PUBLISH_WORKFLOW_ACCEPTED_REQUIRES_PYTHON = (
+    ">=3.12,<3.13",
+    ">=3.12, <3.13",
+    "<3.13,>=3.12",
+    "<3.13, >=3.12",
+    " >=3.12 ,  <3.13 ",
+)
+PUBLISH_WORKFLOW_REJECTED_REQUIRES_PYTHON = (
+    "",
+    ">=3.12",
+    "<3.13",
+    ">=3.11,<3.13",
+    ">=3.12,<3.14",
+    ">=3.13,<3.14",
+    ">=3.12,<3.13,!=3.12.1",
 )
 CONTRIBUTING_COMMANDS = (
     "uv lock --check",
@@ -3168,6 +3209,202 @@ def _expected_sdist_file_members() -> frozenset[str]:
     return members
 
 
+def _publish_workflow_job_environment() -> dict[str, str]:
+    """Parse the publish job's declared env block out of the committed workflow."""
+    workflow_text = (REPOSITORY_ROOT / PUBLISH_WORKFLOW_PATH).read_text(encoding="utf-8")
+    marker = "\n    env:\n"
+    assert workflow_text.count(marker) == 1
+    declared: dict[str, str] = {}
+    for line in workflow_text.split(marker, 1)[1].split("\n"):
+        if not line.strip():
+            break
+        match = re.fullmatch(r'      ([A-Z0-9_]+): "?([^"]*)"?', line)
+        assert match is not None
+        assert match.group(1) not in declared
+        declared[match.group(1)] = match.group(2)
+    return declared
+
+
+def _publish_workflow_verification_program() -> str:
+    """Return the exact Python program the publishing workflow runs before upload.
+
+    The program is read out of the committed workflow instead of being restated here, so
+    these regressions execute the bytes CI will actually run.
+    """
+    workflow_text = (REPOSITORY_ROOT / PUBLISH_WORKFLOW_PATH).read_text(encoding="utf-8")
+    step_marker = f"      - name: {PUBLISH_WORKFLOW_VERIFICATION_STEP}\n"
+    assert workflow_text.count(step_marker) == 1
+    remainder = workflow_text.split(step_marker, 1)[1]
+    next_step = remainder.find("\n      - name: ")
+    step_block = remainder if next_step == -1 else remainder[:next_step]
+    assert "        shell: python\n" in step_block
+    run_marker = "        run: |\n"
+    assert step_block.count(run_marker) == 1
+    body_lines = step_block.split(run_marker, 1)[1].split("\n")
+    indent = min(len(line) - len(line.lstrip()) for line in body_lines if line.strip())
+    assert indent == 10
+    program = "\n".join(line[indent:] if line.strip() else "" for line in body_lines)
+    assert "canonical_specifier_set" in program
+    return program
+
+
+def _publish_verification_metadata(requires_python: str) -> bytes:
+    authority = PUBLISH_WORKFLOW_ARTIFACT_AUTHORITY
+    return (
+        "Metadata-Version: 2.4\n"
+        f"Name: {authority['PROJECT_NAME']}\n"
+        f"Version: {authority['RELEASE_VERSION']}\n"
+        f"Requires-Python: {requires_python}\n"
+        "\n"
+        "Release-contract fixture distribution.\n"
+    ).encode()
+
+
+def _build_publish_verification_fixture(
+    build_output: Path,
+    *,
+    requires_python: str = ">=3.12, <3.13",
+    sdist_regular_members: int = 121,
+    sdist_directory_members: int = 11,
+    wheel_directory_members: int = 8,
+) -> dict[str, str]:
+    """Build faithful stand-in distributions and the environment that authorizes them.
+
+    The frozen governance artifacts are far too large to commit, so the fixture reproduces
+    the archive shapes that matter: a source distribution carrying both regular files and
+    directory entries, and metadata whose Requires-Python serialization can be varied.
+    """
+    authority = PUBLISH_WORKFLOW_ARTIFACT_AUTHORITY
+    build_output.mkdir(parents=True)
+    metadata = _publish_verification_metadata(requires_python)
+    root = f"research_decision_engine-{authority['RELEASE_VERSION']}"
+
+    wheel_path = build_output / authority["WHEEL_NAME"]
+    with zipfile.ZipFile(wheel_path, "w") as wheel:
+        for index in range(wheel_directory_members):
+            wheel.writestr(f"research_decision_engine/package{index}/", b"")
+        wheel.writestr(f"{root}.dist-info/METADATA", metadata)
+        wheel.writestr(f"{root}.dist-info/RECORD", b"research_decision_engine/__init__.py,,\n")
+        wheel.writestr("research_decision_engine/__init__.py", b"# fixture\n")
+
+    sdist_path = build_output / authority["SDIST_NAME"]
+    with tarfile.open(sdist_path, "w:gz") as sdist:
+        for index in range(sdist_directory_members):
+            directory = tarfile.TarInfo(root if index == 0 else f"{root}/directory{index}")
+            directory.type = tarfile.DIRTYPE
+            sdist.addfile(directory)
+        payloads = {f"{root}/PKG-INFO": metadata}
+        for index in range(sdist_regular_members - 1):
+            payloads[f"{root}/module{index}.py"] = b"# fixture\n"
+        assert len(payloads) == sdist_regular_members
+        for name, payload in sorted(payloads.items()):
+            member = tarfile.TarInfo(name)
+            member.size = len(payload)
+            sdist.addfile(member, io.BytesIO(payload))
+
+    environment = dict(authority)
+    for prefix, path in (("WHEEL", wheel_path), ("SDIST", sdist_path)):
+        artifact = path.read_bytes()
+        environment[f"{prefix}_SHA256"] = hashlib.sha256(artifact).hexdigest()
+        environment[f"{prefix}_BYTES"] = str(len(artifact))
+    with zipfile.ZipFile(wheel_path) as wheel:
+        environment["WHEEL_MEMBER_COUNT"] = str(len(wheel.namelist()))
+    environment["SDIST_MEMBER_COUNT"] = str(sdist_regular_members)
+    return environment
+
+
+def _run_publish_workflow_verification(workspace: Path, environment: Mapping[str, str]) -> None:
+    """Execute the workflow's verification program against a prepared workspace."""
+    program = _publish_workflow_verification_program()
+    scoped = {**environment, "GITHUB_WORKSPACE": str(workspace)}
+    preserved = {key: os.environ.get(key) for key in scoped}
+    os.environ.update(scoped)
+    try:
+        with contextlib.redirect_stdout(io.StringIO()):
+            exec(
+                compile(program, PUBLISH_WORKFLOW_PATH, "exec"),
+                {"__name__": "_publish_verification"},
+            )
+    finally:
+        for key, value in preserved.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
+
+
+def _assert_publish_workflow_verification_contract(tmp_path: Path) -> None:
+    """Pin the publishing workflow's artifact authority and its verifier semantics.
+
+    Both regressions below cover defects that let the workflow reject its own frozen
+    artifacts: a Requires-Python comparison against unnormalized pyproject text, and a
+    member count taken over tarfile.getnames(), which also reports directory entries.
+    """
+    authority = PUBLISH_WORKFLOW_ARTIFACT_AUTHORITY
+    assert _publish_workflow_job_environment() == authority
+    assert authority["RELEASE_VERSION"] == PACKAGE_VERSION == "1.0.0rc5"
+    assert authority["SDIST_MEMBER_COUNT"] == str(len(_expected_sdist_file_members()))
+    frozen_sdist_members = int(authority["SDIST_MEMBER_COUNT"])
+    assert frozen_sdist_members == 121
+
+    expected_staged = sorted((authority["SDIST_NAME"], authority["WHEEL_NAME"]))
+    root = tmp_path / "publish-verification"
+
+    # 1. The authorized constraint is accepted however the build backend serializes it,
+    #    and any genuinely different constraint is still rejected.
+    assert PUBLISH_WORKFLOW_REQUIRES_PYTHON in PUBLISH_WORKFLOW_ACCEPTED_REQUIRES_PYTHON
+    assert set(PUBLISH_WORKFLOW_ACCEPTED_REQUIRES_PYTHON).isdisjoint(
+        PUBLISH_WORKFLOW_REJECTED_REQUIRES_PYTHON
+    )
+    for index, requires_python in enumerate(PUBLISH_WORKFLOW_ACCEPTED_REQUIRES_PYTHON):
+        workspace = root / f"accepted-{index}"
+        environment = _build_publish_verification_fixture(
+            workspace / "build-output", requires_python=requires_python
+        )
+        _run_publish_workflow_verification(workspace, environment)
+        assert sorted(path.name for path in (workspace / "upload").iterdir()) == expected_staged
+    for index, requires_python in enumerate(PUBLISH_WORKFLOW_REJECTED_REQUIRES_PYTHON):
+        workspace = root / f"rejected-{index}"
+        environment = _build_publish_verification_fixture(
+            workspace / "build-output", requires_python=requires_python
+        )
+        with pytest.raises(SystemExit, match="unexpected Requires-Python"):
+            _run_publish_workflow_verification(workspace, environment)
+
+    # 2. The member count covers regular files only, so directory entries cannot move it,
+    #    while a genuinely wrong regular-file count is still rejected.
+    for directory_members in (0, 1, 11, 24):
+        workspace = root / f"directories-{directory_members}"
+        environment = _build_publish_verification_fixture(
+            workspace / "build-output",
+            sdist_regular_members=frozen_sdist_members,
+            sdist_directory_members=directory_members,
+        )
+        assert environment["SDIST_MEMBER_COUNT"] == str(frozen_sdist_members)
+        with tarfile.open(workspace / "build-output" / authority["SDIST_NAME"]) as sdist:
+            members = sdist.getmembers()
+        assert sum(1 for member in members if member.isdir()) == directory_members
+        assert sum(1 for member in members if member.isfile()) == frozen_sdist_members
+        assert len(members) == frozen_sdist_members + directory_members
+        _run_publish_workflow_verification(workspace, environment)
+        assert sorted(path.name for path in (workspace / "upload").iterdir()) == expected_staged
+    for regular_members in (frozen_sdist_members - 1, frozen_sdist_members + 1):
+        workspace = root / f"count-{regular_members}"
+        environment = _build_publish_verification_fixture(
+            workspace / "build-output", sdist_regular_members=regular_members
+        )
+        environment["SDIST_MEMBER_COUNT"] = str(frozen_sdist_members)
+        with pytest.raises(SystemExit, match="members, expected"):
+            _run_publish_workflow_verification(workspace, environment)
+
+    # 3. The frozen artifact identity itself remains enforced.
+    workspace = root / "digest-drift"
+    environment = _build_publish_verification_fixture(workspace / "build-output")
+    environment["SDIST_SHA256"] = authority["SDIST_SHA256"]
+    with pytest.raises(SystemExit, match="sha256"):
+        _run_publish_workflow_verification(workspace, environment)
+
+
 def _assert_exact_path_inventory(
     actual: frozenset[str], expected: frozenset[str], label: str
 ) -> None:
@@ -4444,6 +4681,7 @@ def test_release_checker_aggregation_is_deterministic_for_pass_and_failure(
         result["status"] == "PASS" for result in cast(list[dict[str, object]], complete["checks"])
     )
     _assert_community_health_release_contract()
+    _assert_publish_workflow_verification_contract(tmp_path)
     _assert_security_privacy_release_contract()
     _assert_c7_release_document_contract(tmp_path)
     _assert_license_distribution_contract(tmp_path)
