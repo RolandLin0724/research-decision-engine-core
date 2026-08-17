@@ -4,11 +4,13 @@
 
 ## 支持的版本
 
-目前没有受支持的 RDE Core 公开发行版。
+`1.0.0rc5` 是唯一已发布的 RDE Core 版本。它作为 release candidate 获得尽力而为的
+安全修复；目前还没有受支持的 RDE Core 正式发行版。
 
-当前私有 RC 准备分支只对其最新的精确提交提供尽力而为的安全修复。旧的私有开发
-提交不是受支持的发行线。package version `0.1.0` 和 `1.0.0rc1` 都不是已发布且
-受支持的发行版。
+修复基于公开 main 分支的最新精确提交准备。旧的私有开发提交不是受支持的发行线。
+package version `0.1.0` 和 `1.0.0rc1` 都不是已发布且受支持的发行版。
+
+已发布的 release candidate 不附带响应时限承诺，也不附带长期支持承诺。
 
 ## 报告漏洞
 
@@ -23,6 +25,8 @@
 - 在 Private Vulnerability Reporting 验证通过之前，不得创建 tag、GitHub
   Release、GitHub Prerelease，不得上传 PyPI，也不得发布 release announcement。
   从仓库变为公开到验证通过的短暂间隔内，同样禁止这些操作。
+- 上述前置条件在 `1.0.0rc5` 发布之前已经满足：验证先于 tag `v1.0.0rc5`、GitHub
+  prerelease 与 PyPI 上传完成。以上要求对今后每一次发布操作继续有效。
 - 仓库公开后，必须重新通过 Windows 与 Linux CI 以及完整的隐私和安全审计，
   才能执行任何发布操作。
 - 本政策不公布个人电子邮箱地址。

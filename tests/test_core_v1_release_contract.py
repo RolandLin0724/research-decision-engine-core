@@ -524,6 +524,30 @@ DISTRIBUTION_INFRASTRUCTURE_CHANGED_PATHS = (
     PUBLISH_WORKFLOW_PATH,
     RC5_SELF_HOSTING_REPAIR_PATH,
 )
+# POST_RELEASE_DOCS_001 realigns the current-state documentation with the completed
+# 1.0.0rc5 publication. It is deliberately one exact enumerated path set and not a
+# standing documentation-maintenance allowance: a later documentation change must
+# declare its own set rather than reuse this one. The module restates its own path
+# because it re-pins the verbatim strings the doc edits change.
+POST_RELEASE_DOCS_001_CHANGED_PATHS = (
+    "CHANGELOG.md",
+    "CHANGELOG.zh-CN.md",
+    "CORE_V1_COMPATIBILITY.md",
+    "CORE_V1_COMPATIBILITY.zh-CN.md",
+    "README.md",
+    "README.zh-CN.md",
+    "SECURITY.md",
+    "SECURITY.zh-CN.md",
+    "docs/faq.md",
+    "docs/privacy-release-gate.md",
+    "docs/release-notes/1.0.0rc5.md",
+    "docs/troubleshooting.md",
+    "docs/zh-CN/faq.md",
+    "docs/zh-CN/privacy-release-gate.md",
+    "docs/zh-CN/release-notes/1.0.0rc5.md",
+    "docs/zh-CN/troubleshooting.md",
+    RC5_SELF_HOSTING_REPAIR_PATH,
+)
 PUBLISH_WORKFLOW_VERIFICATION_STEP = "Verify the exact artifacts and stage them for upload"
 # The publishing workflow's job env declares the frozen D022 governance-build artifact
 # identity. Those values authorize the only bytes the workflow may ever upload, so the
@@ -1749,6 +1773,28 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     )
     assert PUBLISH_WORKFLOW_PATH.startswith(".github/workflows/")
     assert PUBLISH_WORKFLOW_PATH != CORE_WORKFLOW_PATH
+    # POST_RELEASE_DOCS_001 is exactly enumerated, self-restating, documentation-only,
+    # and disjoint from the frozen payload roots and the protected document blobs.
+    assert len(POST_RELEASE_DOCS_001_CHANGED_PATHS) == 17
+    assert len(set(POST_RELEASE_DOCS_001_CHANGED_PATHS)) == 17
+    assert tuple(sorted(POST_RELEASE_DOCS_001_CHANGED_PATHS)) == tuple(
+        sorted(set(POST_RELEASE_DOCS_001_CHANGED_PATHS))
+    )
+    assert RC5_SELF_HOSTING_REPAIR_PATH in POST_RELEASE_DOCS_001_CHANGED_PATHS
+    assert all(
+        path.endswith(".md")
+        for path in POST_RELEASE_DOCS_001_CHANGED_PATHS
+        if path != RC5_SELF_HOSTING_REPAIR_PATH
+    )
+    assert all((REPOSITORY_ROOT / path).is_file() for path in POST_RELEASE_DOCS_001_CHANGED_PATHS)
+    assert set(PROTECTED_DOCUMENT_BLOB_CONTRACT).isdisjoint(POST_RELEASE_DOCS_001_CHANGED_PATHS)
+    assert not any(
+        path.startswith(root)
+        for path in POST_RELEASE_DOCS_001_CHANGED_PATHS
+        for root in RC6_GOVERNANCE_FROZEN_PAYLOAD_ROOTS
+    )
+    assert PUBLISH_WORKFLOW_PATH not in POST_RELEASE_DOCS_001_CHANGED_PATHS
+    assert CORE_WORKFLOW_PATH not in POST_RELEASE_DOCS_001_CHANGED_PATHS
     assert CI_NODEID_SCRATCH_PATHS == (
         ".core-v1-nodeids-1.txt",
         ".core-v1-nodeids-2.txt",
@@ -1864,6 +1910,7 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     source_remediation_paths = set(RC5_AUTHORIZED_CHANGED_PATHS)
     repair_paths = {RC5_SELF_HOSTING_REPAIR_PATH}
     distribution_paths = set(DISTRIBUTION_INFRASTRUCTURE_CHANGED_PATHS)
+    post_release_docs_paths = set(POST_RELEASE_DOCS_001_CHANGED_PATHS)
     if commit_model == "FULL_PRIVATE_SOURCE_ONE_PARENT":
         assert len(tracked_paths) == RC5_SOURCE_TRACKED_PATH_COUNT
         assert all((REPOSITORY_ROOT / path).is_file() for path in RC5_INTERNAL_EXCLUDE_PATHS)
@@ -1888,8 +1935,17 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
             RC5_PRODUCT_TRACKED_PATH_COUNT,
             S11_DISTRIBUTION_TRACKED_PATH_COUNT,
         )
-        assert committed_candidate_paths in (set(), repair_paths, distribution_paths)
-        assert substantive_candidate_paths in (set(), set(RC6_GOVERNANCE_CHANGED_PATHS))
+        assert committed_candidate_paths in (
+            set(),
+            repair_paths,
+            distribution_paths,
+            post_release_docs_paths,
+        )
+        assert substantive_candidate_paths in (
+            set(),
+            set(RC6_GOVERNANCE_CHANGED_PATHS),
+            post_release_docs_paths,
+        )
         assert all(not (REPOSITORY_ROOT / path).exists() for path in RC5_INTERNAL_EXCLUDE_PATHS)
     assert set(PROTECTED_DOCUMENT_BLOB_CONTRACT).isdisjoint(source_remediation_paths)
     _assert_rc5_public_provenance_role_token_contract()
@@ -2528,21 +2584,24 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     changelog = changed_text["CHANGELOG.md"]
     changelog_zh = changed_text["CHANGELOG.zh-CN.md"]
     for text in (changelog, changelog_zh):
-        assert re.findall(r"^## \[([^]]+)\]$", text, flags=re.MULTILINE) == ["Unreleased"]
+        assert re.findall(r"^## \[([^]]+)\] - 20\d{2}-\d{2}-\d{2}$", text, flags=re.MULTILINE) == [
+            "1.0.0rc5"
+        ]
+        assert re.findall(r"^## \[([^]]+)\]$", text, flags=re.MULTILINE) == []
         assert "## [1.0.0rc1]" not in text
         assert "## [1.0.0rc2]" not in text
         assert "## [1.0.0rc3]" not in text
         assert "## [1.0.0rc4]" not in text
-        assert "## [1.0.0rc5]" not in text
-    assert "**Active private candidate:** `1.0.0rc5`" in changelog
-    assert "**Public release:** `NONE`" in changelog
+        assert "## [Unreleased]" not in text
+    assert "**Published candidate:** `1.0.0rc5`" in changelog
+    assert "**Public release:** `RELEASE_CANDIDATE_ONLY`" in changelog
     assert (
         "**Prior private candidate:** `1.0.0rc4`, which was superseded before publication "
         "when private-source commit references were removed from release-facing surfaces"
         in " ".join(changelog.split())
     )
-    assert "**当前私有候选：** `1.0.0rc5`" in changelog_zh
-    assert "**公开发布：** `NONE`" in changelog_zh
+    assert "**已发布候选：** `1.0.0rc5`" in changelog_zh
+    assert "**公开发布：** `RELEASE_CANDIDATE_ONLY`" in changelog_zh
     assert (
         "**先前私有候选：** `1.0.0rc4`，在从面向发布的表面移除私有源提交引用后于 "
         "公开发布前被取代" in " ".join(changelog_zh.split())
@@ -2773,8 +2832,8 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
 
     rc5_notes = changed_text["docs/release-notes/1.0.0rc5.md"]
     rc5_notes_zh = changed_text["docs/zh-CN/release-notes/1.0.0rc5.md"]
-    assert rc5_notes.splitlines()[0] == "# RC CANDIDATE — NOT PUBLISHED"
-    assert rc5_notes_zh.splitlines()[0] == "# RC 候选 — 尚未发布"
+    assert rc5_notes.splitlines()[0] == "# RC CANDIDATE — PUBLISHED"
+    assert rc5_notes_zh.splitlines()[0] == "# RC 候选 — 已完成发布"
     assert tuple(
         line.removeprefix("## ") for line in rc5_notes.splitlines() if line.startswith("## ")
     ) == (
@@ -2782,11 +2841,11 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
         "Provenance remediation",
         "Compatibility",
         "Verification boundary",
-        "Remaining publication gates",
+        "Publication record",
     )
     assert tuple(
         line.removeprefix("## ") for line in rc5_notes_zh.splitlines() if line.startswith("## ")
-    ) == ("状态", "来源修复", "兼容性", "验证边界", "剩余发布门禁")
+    ) == ("状态", "来源修复", "兼容性", "验证边界", "发布记录")
     _assert_shared_markers(
         (rc5_notes, rc5_notes_zh),
         frozenset(
@@ -2811,11 +2870,17 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
         ),
     )
     assert "**Package version:** `1.0.0rc5`" in rc5_notes
-    assert "**Candidate state:** `RC_CANDIDATE_NOT_PUBLISHED`" in rc5_notes
+    assert "**Candidate state:** `RC_CANDIDATE_PUBLISHED`" in rc5_notes
     assert "**Public visibility:** `YES`" in rc5_notes
+    assert "**Tag:** `v1.0.0rc5`" in rc5_notes
+    assert "**GitHub Release:** `PRERELEASE`" in rc5_notes
+    assert "**PyPI:** `PUBLISHED`" in rc5_notes
     assert "**软件包版本：** `1.0.0rc5`" in rc5_notes_zh
-    assert "**候选状态：** `RC_CANDIDATE_NOT_PUBLISHED`" in rc5_notes_zh
+    assert "**候选状态：** `RC_CANDIDATE_PUBLISHED`" in rc5_notes_zh
     assert "**公开可见：** `YES`" in rc5_notes_zh
+    assert "**标签：** `v1.0.0rc5`" in rc5_notes_zh
+    assert "**GitHub Release：** `PRERELEASE`" in rc5_notes_zh
+    assert "**PyPI：** `PUBLISHED`" in rc5_notes_zh
     assert re.search(r"\bpip(?:3)?\s+install\b", rc5_notes, flags=re.IGNORECASE) is None
     assert re.search(r"\bpip(?:3)?\s+install\b", rc5_notes_zh, flags=re.IGNORECASE) is None
     assert re.search(r"\b20\d{2}-\d{2}-\d{2}\b", rc5_notes) is None
@@ -2950,9 +3015,9 @@ RDE Core 目前还没有在真实生产环境中运行过，也没有经过大�
     assert "[Changelog](CHANGELOG.md)" in readme
     assert "[RDE Core v1 compatibility contract](CORE_V1_COMPATIBILITY.md)" in readme
     assert (
-        "1.0.0rc5 private candidate notes are retained only in the private repository "
-        "and are intentionally outside the 121-member source distribution."
-        in " ".join(readme.split())
+        "1.0.0rc5 release notes are tracked in this repository at "
+        "`docs/release-notes/1.0.0rc5.md` and are intentionally outside the 121-member "
+        "source distribution." in " ".join(readme.split())
     )
     assert "](docs/release-notes/1.0.0rc5.md)" not in readme
     assert (
@@ -2962,16 +3027,22 @@ RDE Core 目前还没有在真实生产环境中运行过，也没有经过大�
     assert "[变更日志](CHANGELOG.zh-CN.md)" in readme_zh
     assert "[RDE Core v1 兼容性合同](CORE_V1_COMPATIBILITY.zh-CN.md)" in readme_zh
     assert (
-        "1.0.0rc5 私有候选说明仅保留在私有仓库中，并被有意排除在 121-member source "
-        "distribution 之外。" in " ".join(readme_zh.split())
+        "1.0.0rc5 发布说明保存在本仓库的 `docs/release-notes/1.0.0rc5.md`，并被有意 "
+        "排除在 121-member source distribution 之外。" in " ".join(readme_zh.split())
     )
     assert "](docs/zh-CN/release-notes/1.0.0rc5.md)" not in readme_zh
     assert (
         "[1.0.0rc3 历史说明（已被取代的私有候选 / 尚未发布）]"
         "(docs/zh-CN/release-notes/1.0.0rc3.md)" in readme_zh
     )
-    assert "active private candidate is `1.0.0rc5`" in " ".join(readme.split())
-    assert "当前私有候选版本是 `1.0.0rc5`" in " ".join(readme_zh.split())
+    assert "current published candidate is `1.0.0rc5`" in " ".join(readme.split())
+    assert "当前已发布的候选版本是 `1.0.0rc5`" in " ".join(readme_zh.split())
+    # The published candidate must be installable from the README without a checkout.
+    assert "pip install research-decision-engine==1.0.0rc5" in readme
+    assert "pip install research-decision-engine==1.0.0rc5" in readme_zh
+    assert "rde --help" in readme and "rde --help" in readme_zh
+    assert "https://pypi.org/project/research-decision-engine/" in readme
+    assert "https://pypi.org/project/research-decision-engine/" in readme_zh
     assert "sanitized product repository is public" in " ".join(readme.split()).casefold()
     assert "净化的产品仓库已经公开" in " ".join(readme_zh.split())
     assert (
@@ -3772,8 +3843,10 @@ def _assert_security_privacy_release_contract() -> None:
     ):
         _assert_markdown_links_resolve(path)
 
-    assert "No public RDE Core release is currently supported." in security_normalized
-    assert "目前没有受支持的 RDE Core 公开发行版。" in security_zh_normalized
+    assert "`1.0.0rc5` is the only published RDE Core version." in security_normalized
+    assert "no final RDE Core release is supported yet." in security_normalized
+    assert "`1.0.0rc5` 是唯一已发布的 RDE Core 版本。" in security_zh_normalized
+    assert "目前还没有受支持的 RDE Core 正式发行版。" in security_zh_normalized
     assert (
         "Do not open a public issue for a suspected security vulnerability." in security_normalized
     )
@@ -3827,24 +3900,24 @@ def _assert_security_privacy_release_contract() -> None:
         "| 法定姓名 | `NOT_PUBLISHED` |",
     )
     english_current_status_rows = (
-        "| Current task | `PUBLIC_RC6_GOVERNANCE_AND_CI_ALIGNMENT` |",
+        "| Current task | `POST_RELEASE_DOCUMENTATION_MAINTENANCE` |",
         "| Full Git-history privacy audit | `COMPLETED_WITH_INCREMENTAL_EXTENSION` |",
         "| Credential rotation/revocation | `COMPLETED_EXTERNALLY_OPERATOR_ATTESTED` |",
         "| Sanitized product repository | `ESTABLISHED_PUBLIC` |",
         "| Repository visibility | `PUBLIC` |",
         "| Repository visibility change | `AUTHORIZED_AND_COMPLETED` |",
         "| Private Vulnerability Reporting | `ENABLED_AND_VERIFIED` |",
-        "| Tag / GitHub Release / PyPI | `NONE / NONE / NOT_PUBLISHED` |",
+        "| Tag / GitHub Release / PyPI | `v1.0.0rc5 / PRERELEASE / PUBLISHED_1.0.0rc5` |",
     )
     chinese_current_status_rows = (
-        "| 当前任务 | `PUBLIC_RC6_GOVERNANCE_AND_CI_ALIGNMENT` |",
+        "| 当前任务 | `POST_RELEASE_DOCUMENTATION_MAINTENANCE` |",
         "| Full Git-history privacy audit | `COMPLETED_WITH_INCREMENTAL_EXTENSION` |",
         "| Credential rotation/revocation | `COMPLETED_EXTERNALLY_OPERATOR_ATTESTED` |",
         "| Sanitized product repository | `ESTABLISHED_PUBLIC` |",
         "| Repository visibility | `PUBLIC` |",
         "| Repository visibility change | `AUTHORIZED_AND_COMPLETED` |",
         "| Private Vulnerability Reporting | `ENABLED_AND_VERIFIED` |",
-        "| Tag / GitHub Release / PyPI | `NONE / NONE / NOT_PUBLISHED` |",
+        "| Tag / GitHub Release / PyPI | `v1.0.0rc5 / PRERELEASE / PUBLISHED_1.0.0rc5` |",
     )
     assert all(row in privacy for row in english_release_model_rows)
     assert all(row in privacy_zh for row in chinese_release_model_rows)

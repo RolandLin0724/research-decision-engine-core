@@ -18,9 +18,10 @@ python --version
 uv --version
 ```
 
-不同的 Python minor version 不在当前合同内。本 pre-release 文档不声称或授权任何 PyPI
-发布，因此请使用经授权的私有 source checkout，不要改用无关的 `pip install rde` 或
-名称相似的 package。请在仓库根目录使用仓库已提交的 lockfile：
+不同的 Python minor version 不在当前合同内。从 PyPI 安装应使用
+`pip install research-decision-engine==1.0.0rc5`；`rde` 是命令行命令而不是分发包
+名称，因此无关的 `pip install rde` 或名称相似的 package 会安装到别的软件。若要
+排查仓库 checkout，请在仓库根目录使用已提交的 lockfile：
 
 ```console
 git status --short

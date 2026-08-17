@@ -4,15 +4,16 @@
 
 Research Decision Engine Core（简称 RDE Core）处于预发布阶段。
 
-- **当前私有候选：** `1.0.0rc5`
-- **公开发布：** `NONE`
+- **已发布候选：** `1.0.0rc5`
+- **公开发布：** `RELEASE_CANDIDATE_ONLY`
 - **先前私有候选：** `1.0.0rc4`，在从面向发布的表面移除私有源提交引用后于
   公开发布前被取代
 
-净化的产品仓库已经公开。尚未执行公开仓库发布，也不存在标签或 GitHub Release，
-软件包也尚未发布至 PyPI。本变更日志描述尚未发布的 RC 候选，而非公开发布。
+净化的产品仓库已经公开。标签 `v1.0.0rc5` 与对应的 GitHub prerelease 均已存在，
+软件包也已以 `1.0.0rc5` 版本位于 PyPI 上。本变更日志描述的是已发布的 release
+candidate，而不是最终的 v1.0 版本。
 
-## [Unreleased]
+## [1.0.0rc5] - 2026-08-17
 
 ### Added（新增）
 
@@ -102,6 +103,11 @@ Research Decision Engine Core（简称 RDE Core）处于预发布阶段。
   未改变；只有 `research_decision_engine.__version__.value` 改变。仓库
   visibility 保持 `PRIVATE`，tag 保持 `NONE`，GitHub Release 保持 `NONE`，
   PyPI 保持 `NOT_PUBLISHED`。
+- 将 `1.0.0rc5` 以标签 `v1.0.0rc5`、GitHub prerelease 以及恰好两个 PyPI 分发文件
+  的形式发布；上传通过 GitHub OIDC Trusted Publishing 完成，带有 digital
+  attestations，且未使用 API token。本节前面各条中给出的 `Repository visibility`、
+  `tag`、`GitHub Release` 与 `PyPI` 取值记录的是每次候选推进时的状态，属于历史
+  记录，并非当前状态。
 
 ### Documentation（文档）
 

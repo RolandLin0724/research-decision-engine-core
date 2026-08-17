@@ -16,8 +16,9 @@ RDE Assurance 产品轨道。
 
 ## 它现在正式成为 RDE Core v1.0 了吗？
 
-没有。公共 API 已针对 release-candidate 准备阶段冻结，但 RDE Core 仍是 pre-release，
-尚未达到 release-ready。C6 文档完成并不建立后续 release readiness。
+没有。`1.0.0rc5` 是已发布的 release candidate，而不是最终的 v1.0。公共 API 已针对
+release-candidate 阶段冻结，但 RDE Core 仍是 pre-release，尚未达到 release-ready。
+发布候选版本本身并不建立 release readiness。
 
 ## 它需要 GPU 吗？
 
@@ -128,8 +129,11 @@ RunBundles、示例或诊断 logs。RDE Core 不是 secret manager，只使用�
 
 ## 当前可以从 PyPI 安装 package 吗？
 
-当前 pre-release Core 没有声称或授权受支持的 PyPI 安装。请使用 README 中描述的、
-经授权的 source-checkout 安装；不要改用名称相似的 package。
+可以。已发布的 release candidate 通过
+`pip install research-decision-engine==1.0.0rc5` 安装。分发包名称是
+`research-decision-engine`；`rde` 是命令行命令而不是包名，请不要改用名称相似的
+package。请固定精确版本：目前只发布了 release candidate，未启用预发布版本时直接
+安装不会解析到任何版本。贡献者可以改用 README 中描述的 source-checkout 安装。
 
 ## 在哪里可以了解更多？
 

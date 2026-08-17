@@ -4,16 +4,16 @@ English | [Simplified Chinese](CHANGELOG.zh-CN.md)
 
 Research Decision Engine Core (RDE Core) is pre-release.
 
-- **Active private candidate:** `1.0.0rc5`
-- **Public release:** `NONE`
+- **Published candidate:** `1.0.0rc5`
+- **Public release:** `RELEASE_CANDIDATE_ONLY`
 - **Prior private candidate:** `1.0.0rc4`, which was superseded before publication
   when private-source commit references were removed from release-facing surfaces
 
-The sanitized product repository is public. No public repository release, tag, or
-GitHub Release exists, and the package is not published to PyPI. This changelog
-describes an unpublished RC candidate, not a public release.
+The sanitized product repository is public. Tag `v1.0.0rc5` and the matching GitHub
+prerelease exist, and the distribution is on PyPI at version `1.0.0rc5`. This
+changelog describes a published release candidate, not a final v1.0 release.
 
-## [Unreleased]
+## [1.0.0rc5] - 2026-08-17
 
 ### Added
 
@@ -119,6 +119,11 @@ describes an unpublished RC candidate, not a public release.
   `research_decision_engine.__version__.value` changes. Repository visibility
   remains `PRIVATE`, tag remains `NONE`, GitHub Release remains `NONE`, and PyPI
   remains `NOT_PUBLISHED`.
+- Published `1.0.0rc5` as tag `v1.0.0rc5`, as a GitHub prerelease, and as exactly two
+  PyPI distributions uploaded through GitHub OIDC Trusted Publishing with digital
+  attestations and no API token. The `Repository visibility`, `tag`, `GitHub Release`,
+  and `PyPI` values stated in the earlier bullets of this section record the state at
+  each candidate advance; they are historical and are not the current state.
 
 ### Documentation
 

@@ -16,10 +16,11 @@ This is a compatibility contract, not a release-readiness claim. Local validatio
 and a configured workflow do not prove that remote CI passed, and neither creates
 RDE Assurance authority.
 
-The current private candidate is `1.0.0rc5`. It remains experimental and
+The current published candidate is `1.0.0rc5`. It remains experimental and
 pre-release: real production use and broad user or workload validation are not yet
-established. The sanitized product repository is public; no public repository
-release, GitHub Prerelease, tag, GitHub Release, or PyPI publication has occurred.
+established. The sanitized product repository is public; tag `v1.0.0rc5`, the
+matching GitHub prerelease, and the PyPI publication of `1.0.0rc5` have occurred.
+This contract binds that published candidate.
 
 ## Public Python imports
 
@@ -377,5 +378,6 @@ authorized. Core tests and CI create no Assurance authority, S-stage transition,
 review seal, Package-L/Package-P approval, or candidate-restoration permission.
 
 The compatibility freeze closes a bounded Core contract only. C6 is
-`CLOSED_FOR_RC`; C7 is `PARTIALLY_CLOSED`. This document advances neither state, and
-RDE Core v1 remains `NOT_READY`.
+`CLOSED_FOR_RC`; C7 is `PARTIALLY_CLOSED`. This document advances neither state.
+Publishing the `1.0.0rc5` release candidate did not advance them either: a final
+RDE Core v1 release remains `NOT_READY`.

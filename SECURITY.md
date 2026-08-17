@@ -4,12 +4,15 @@ English | [简体中文](SECURITY.zh-CN.md)
 
 ## Supported versions
 
-No public RDE Core release is currently supported.
+`1.0.0rc5` is the only published RDE Core version. It receives best-effort security
+fixes as a release candidate; no final RDE Core release is supported yet.
 
-The current private RC-preparation branch receives best-effort security fixes only
-for its latest exact commit. Old private development commits are not supported
-release lines. Neither package version `0.1.0` nor `1.0.0rc1` is a published,
-supported release.
+Fixes are prepared against the latest exact commit of the public main branch. Old
+private development commits are not supported release lines. Neither package
+version `0.1.0` nor `1.0.0rc1` is a published, supported release.
+
+A published release candidate carries no response-time commitment and no
+long-term-support commitment.
 
 ## Reporting a vulnerability
 
@@ -28,6 +31,9 @@ supported release.
 - Private Vulnerability Reporting must be verified before any tag, GitHub Release,
   GitHub Prerelease, PyPI upload, or release announcement. During the interval
   between public visibility and verification, none of those actions may occur.
+- These preconditions were satisfied before `1.0.0rc5` shipped. Verification
+  preceded tag `v1.0.0rc5`, the GitHub prerelease, and the PyPI upload. The
+  requirements above remain standing policy for every future release action.
 - After public visibility, Windows and Linux CI and the complete privacy and
   security audit must pass again before any release action.
 - This policy does not publish a personal email address.

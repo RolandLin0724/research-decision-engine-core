@@ -17,9 +17,9 @@ the separately governed RDE Assurance product track.
 
 ## Is it formally RDE Core v1.0 now?
 
-No. The public API is frozen for release-candidate preparation, but RDE Core remains
-pre-release and is not yet release-ready. C6 documentation completion does not
-establish later release readiness.
+No. `1.0.0rc5` is a published release candidate, not a final v1.0. The public API is
+frozen for the release-candidate line, but RDE Core remains pre-release and is not
+yet release-ready. Publishing a candidate does not establish release readiness.
 
 ## Does it require a GPU?
 
@@ -139,9 +139,13 @@ manager, and environment-variable use alone does not make surrounding output saf
 
 ## Can I install the current package from PyPI?
 
-No supported PyPI installation is claimed or authorized for the current pre-release
-Core. Use the authorized source-checkout installation described in the README; do
-not substitute a similarly named package.
+Yes. The published release candidate installs with
+`pip install research-decision-engine==1.0.0rc5`. The distribution name is
+`research-decision-engine`; `rde` is the console command, not a package name, so do
+not substitute a similarly named package. Pin the exact version: only release
+candidates exist so far, so a plain install resolves nothing unless pre-releases are
+enabled. Contributors can use the source-checkout installation described in the
+README instead.
 
 ## Where can I learn more?
 

@@ -39,21 +39,28 @@ RDE Assurance product track.
 
 ## Current status
 
-- **Pre-release:** RDE Core v1.0 has not been formally released. The active private
-  candidate is `1.0.0rc5`; it is not published.
+- **Published release candidate:** the current published candidate is `1.0.0rc5`.
+  It is a release candidate, not a final RDE Core v1.0 release.
 - **RC API freeze:** the public API is frozen for the release-candidate line and is
   covered by the RDE 1.x compatibility contract.
 - **Prior private candidate:** `1.0.0rc4` was superseded before publication when
   private-source commit references were removed from release-facing surfaces. Its
   private, unpublished evidence is preserved externally.
-- **Publication state:** the sanitized product repository is public. No public
-  repository release, GitHub Prerelease, tag, GitHub Release, release
-  announcement, or PyPI publication has occurred.
+- **Publication state:** the sanitized product repository is public. Tag `v1.0.0rc5`
+  and the matching GitHub prerelease exist, and the `research-decision-engine`
+  distribution at version `1.0.0rc5` is on PyPI.
 - **Private validation provenance:** exact private commit and workflow identities
   are retained only in external private evidence; the public package does not
   encode them.
 - That Core CI result is not RDE Assurance approval and is not production-readiness
   approval.
+
+## Project links
+
+- [PyPI project](https://pypi.org/project/research-decision-engine/)
+- [PyPI 1.0.0rc5](https://pypi.org/project/research-decision-engine/1.0.0rc5/)
+- [Source repository](https://github.com/RolandLin0724/research-decision-engine-core)
+- [GitHub prerelease v1.0.0rc5](https://github.com/RolandLin0724/research-decision-engine-core/releases/tag/v1.0.0rc5)
 
 ## Requirements
 
@@ -64,23 +71,53 @@ RDE Assurance product track.
 - no required cloud service
 - no required GPU
 
-## Installation from the current source repository
+## Installation
 
-The permanent audit repository remains private. Authorized maintainers with an
-existing private checkout can install the locked environment from its current
-source branch:
+Install the published release candidate from PyPI:
 
 ```console
+pip install research-decision-engine==1.0.0rc5
+```
+
+The distribution name is `research-decision-engine`. The import package is
+`research_decision_engine` and the console command is `rde`. Do not substitute a
+similarly named package. A plain `pip install research-decision-engine` resolves
+nothing unless pre-releases are enabled, because only release candidates are
+published so far.
+
+Contributors working from a checkout of the sanitized product repository install
+the locked environment instead:
+
+```console
+git clone https://github.com/RolandLin0724/research-decision-engine-core.git
+cd research-decision-engine-core
 uv sync --locked
 ```
 
-The sanitized product repository is `RolandLin0724/research-decision-engine-core`,
-and it remains `PRIVATE`. No public clone command or PyPI installation is available
-for this private candidate.
+The permanent audit repository remains private and is not required to use or
+develop RDE Core.
+
+## First run
+
+Confirm the installed command and its subcommands:
+
+```console
+rde --help
+```
+
+Create a local SQLite history and ask for one suggested experiment:
+
+```console
+rde --db history.sqlite3 init
+rde --db history.sqlite3 suggest
+```
+
+Both commands print JSON. `init` reports the initialized database and `suggest`
+reports the next candidate and its parameters. Nothing is sent off the machine.
 
 ## Ten-minute Quickstart
 
-After installation, create a new empty working directory under the repository root:
+After installation, create a new empty working directory:
 
 ```console
 mkdir quickstart
@@ -184,7 +221,14 @@ print(f"Replay equivalent: {replayed.equivalent}")
 print(f"Replay callable executions: {replayed.callable_execution_count}")
 ```
 
-Run it from that directory:
+Run it from that directory with the interpreter that has RDE Core installed:
+
+```console
+python quickstart.py
+```
+
+Contributors working from a repository checkout can run it against the locked
+environment instead:
 
 ```console
 uv run --locked python quickstart.py
@@ -250,18 +294,19 @@ Public project identity: RolandLin0724.
 - [Privacy and secret release gate](docs/privacy-release-gate.md)
 
 Completed current-tree and history privacy audits do not authorize direct public
-conversion of the permanent private repository or publication of this candidate.
-The sanitized product repository became public only after every private preparation
-gate passed and an explicit operator authorized the visibility change. Private
-Vulnerability Reporting is enabled and verified. The remaining public-release gate
-stays open.
+conversion of the permanent private repository. The sanitized product repository
+became public only after every private preparation gate passed and an explicit
+operator authorized the visibility change. Private Vulnerability Reporting is
+enabled and verified. Tag `v1.0.0rc5`, the GitHub prerelease, and the PyPI
+publication of `1.0.0rc5` all completed after those gates passed.
 
 ## Next reading
 
 - [Changelog](CHANGELOG.md)
 - [RDE Core v1 compatibility contract](CORE_V1_COMPATIBILITY.md)
-- 1.0.0rc5 private candidate notes are retained only in the private repository
-  and are intentionally outside the 121-member source distribution.
+- 1.0.0rc5 release notes are tracked in this repository at
+  `docs/release-notes/1.0.0rc5.md` and are intentionally outside the 121-member
+  source distribution.
 - [1.0.0rc3 historical notes (Superseded private candidate / Not published)](docs/release-notes/1.0.0rc3.md)
 - [Testing RDE Core v1](TESTING.md)
 - [PythonFunctionAdapter guide](docs/python-function-adapter.md)

@@ -2,9 +2,12 @@
 
 [English](../privacy-release-gate.md) | 简体中文
 
-本文为未来公开发布建立强制门槛。它记录政策，不声称该门已经完成。在每一项私有
-状态准备门禁通过并由 operator 明确授权 visibility change 之后，净化的产品仓库
-已经公开。所有要求的公开后步骤通过之前，整体发布门禁仍未完成。
+本文记录公开发布的强制门槛政策。在每一项私有状态准备门禁通过并由 operator
+明确授权 visibility change 之后，净化的产品仓库已经公开。随后，下文 `S0` 至
+`S11` 的顺序针对 `1.0.0rc5` release candidate 已完整执行完毕。
+
+政策正文保持不变，继续作为今后任何发布操作的标准要求。只有文末的当前状态表格
+描述当前状态。
 
 ## 冻结的发布模型
 
@@ -85,14 +88,14 @@ values。
 
 | 项目 | 状态 |
 | --- | --- |
-| 当前任务 | `PUBLIC_RC6_GOVERNANCE_AND_CI_ALIGNMENT` |
+| 当前任务 | `POST_RELEASE_DOCUMENTATION_MAINTENANCE` |
 | Full Git-history privacy audit | `COMPLETED_WITH_INCREMENTAL_EXTENSION` |
 | Credential rotation/revocation | `COMPLETED_EXTERNALLY_OPERATOR_ATTESTED` |
 | Sanitized product repository | `ESTABLISHED_PUBLIC` |
 | Repository visibility | `PUBLIC` |
 | Repository visibility change | `AUTHORIZED_AND_COMPLETED` |
 | Private Vulnerability Reporting | `ENABLED_AND_VERIFIED` |
-| Tag / GitHub Release / PyPI | `NONE / NONE / NOT_PUBLISHED` |
+| Tag / GitHub Release / PyPI | `v1.0.0rc5 / PRERELEASE / PUBLISHED_1.0.0rc5` |
 
 credential response status 来自外部 operator attestation。本任务没有执行或独立证明
 server-side revocation，也没有检查 credential value。当前 release-facing scan 明确

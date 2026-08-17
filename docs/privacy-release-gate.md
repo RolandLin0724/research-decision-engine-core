@@ -2,11 +2,14 @@
 
 English | [简体中文](zh-CN/privacy-release-gate.md)
 
-This document establishes a mandatory gate for a future public release. It records
-policy; it does not claim that the gate is complete. The sanitized product
-repository became public only after every private-state preparation gate passed and
-an operator explicitly authorized the visibility change. The overall release gate
-stays incomplete until every required post-public step also passes.
+This document records the mandatory gate policy for a public release. The sanitized
+product repository became public only after every private-state preparation gate
+passed and an operator explicitly authorized the visibility change. The `S0` through
+`S11` sequence below then ran to completion for the `1.0.0rc5` release candidate.
+
+The policy text is retained unchanged as the standing requirement for any future
+release action. Only the current-status table at the end of this document states
+present state.
 
 ## Frozen release model
 
@@ -95,14 +98,14 @@ placed in release reports.
 
 | Item | Status |
 | --- | --- |
-| Current task | `PUBLIC_RC6_GOVERNANCE_AND_CI_ALIGNMENT` |
+| Current task | `POST_RELEASE_DOCUMENTATION_MAINTENANCE` |
 | Full Git-history privacy audit | `COMPLETED_WITH_INCREMENTAL_EXTENSION` |
 | Credential rotation/revocation | `COMPLETED_EXTERNALLY_OPERATOR_ATTESTED` |
 | Sanitized product repository | `ESTABLISHED_PUBLIC` |
 | Repository visibility | `PUBLIC` |
 | Repository visibility change | `AUTHORIZED_AND_COMPLETED` |
 | Private Vulnerability Reporting | `ENABLED_AND_VERIFIED` |
-| Tag / GitHub Release / PyPI | `NONE / NONE / NOT_PUBLISHED` |
+| Tag / GitHub Release / PyPI | `v1.0.0rc5 / PRERELEASE / PUBLISHED_1.0.0rc5` |
 
 The credential response status is an external operator attestation. This task did
 not perform or independently prove server-side revocation and did not inspect a

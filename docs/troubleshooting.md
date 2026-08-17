@@ -20,10 +20,11 @@ python --version
 uv --version
 ```
 
-A different Python minor version is outside the current contract. No PyPI
-publication is claimed or authorized by this pre-release documentation, so use the
-authorized private source checkout rather than an unrelated `pip install rde` or
-similarly named package. Use the repository's committed lockfile from its root:
+A different Python minor version is outside the current contract. Installing from
+PyPI means `pip install research-decision-engine==1.0.0rc5`; `rde` is the console
+command, not a distribution name, so an unrelated `pip install rde` or similarly
+named package installs unrelated software. When you are diagnosing a repository
+checkout instead, use its committed lockfile from the repository root:
 
 ```console
 git status --short

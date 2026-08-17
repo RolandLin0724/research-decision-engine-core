@@ -33,17 +33,25 @@ RDE Core 不是托管服务、Web UI、GPU 或集群执行系统、持续学习�
 
 ## 当前状态
 
-- **预发布：** RDE Core v1.0 尚未正式发布。当前私有候选版本是
-  `1.0.0rc5`，尚未发布。
+- **已发布的候选版本：** 当前已发布的候选版本是 `1.0.0rc5`。它是 release
+  candidate，而不是最终的 RDE Core v1.0 版本。
 - **RC API 冻结：** 公共 API 已针对 release candidate 阶段冻结，并受 RDE 1.x
   兼容性合同保护。
 - **先前私有候选：** `1.0.0rc4` 在从面向发布的表面移除私有源提交引用后于
   公开发布前被取代。其私有、未发布证据仅在外部私有证据中保留。
-- **发布状态：** 净化的产品仓库已经公开。尚未执行公开仓库发布，也未创建
-  GitHub Prerelease、tag、GitHub Release 或 release announcement，PyPI 也未发布。
+- **发布状态：** 净化的产品仓库已经公开。tag `v1.0.0rc5` 与对应的 GitHub
+  prerelease 均已存在，`research-decision-engine` 分发包的 `1.0.0rc5` 版本也已
+  位于 PyPI 上。
 - **私有验证来源：** 精确的私有提交与工作流身份仅保留在外部私有证据中；
   公开软件包不对其编码。
 - 该 Core CI 结果不是 RDE Assurance 批准，也不是生产就绪批准。
+
+## 项目链接
+
+- [PyPI 项目](https://pypi.org/project/research-decision-engine/)
+- [PyPI 1.0.0rc5](https://pypi.org/project/research-decision-engine/1.0.0rc5/)
+- [源代码仓库](https://github.com/RolandLin0724/research-decision-engine-core)
+- [GitHub prerelease v1.0.0rc5](https://github.com/RolandLin0724/research-decision-engine-core/releases/tag/v1.0.0rc5)
 
 ## 环境要求
 
@@ -53,21 +61,50 @@ RDE Core 不是托管服务、Web UI、GPU 或集群执行系统、持续学习�
 - 无必需的云服务
 - 无必需的 GPU
 
-## 从当前源代码仓库安装
+## 安装
 
-永久保留的审计仓库仍为私有仓库。已有私有 checkout 的授权维护者可以从当前源码
-分支安装锁定环境：
+从 PyPI 安装已发布的候选版本：
 
 ```console
+pip install research-decision-engine==1.0.0rc5
+```
+
+分发包名称是 `research-decision-engine`，导入包是 `research_decision_engine`，
+命令行工具是 `rde`。请不要改用名称相近的其他软件包。由于目前只发布了 release
+candidate，直接执行 `pip install research-decision-engine` 在未启用预发布版本时
+不会解析到任何版本。
+
+从净化产品仓库的 checkout 进行开发的贡献者请改为安装锁定环境：
+
+```console
+git clone https://github.com/RolandLin0724/research-decision-engine-core.git
+cd research-decision-engine-core
 uv sync --locked
 ```
 
-净化的产品仓库为 `RolandLin0724/research-decision-engine-core`，并保持
-`PRIVATE`。此私有候选没有可用的公开 clone 命令或 PyPI 安装方式。
+永久保留的审计仓库仍为私有仓库，使用或开发 RDE Core 都不需要它。
+
+## 首次运行
+
+确认已安装的命令及其子命令：
+
+```console
+rde --help
+```
+
+创建本地 SQLite 历史，并请求一个建议实验：
+
+```console
+rde --db history.sqlite3 init
+rde --db history.sqlite3 suggest
+```
+
+两条命令都输出 JSON。`init` 报告数据库已初始化，`suggest` 报告下一个候选及其
+参数。任何数据都不会离开本机。
 
 ## 十分钟 Quickstart
 
-安装后，在仓库根目录下创建一个新的空工作目录：
+安装后，创建一个新的空工作目录：
 
 ```console
 mkdir quickstart
@@ -171,7 +208,13 @@ print(f"Replay equivalent: {replayed.equivalent}")
 print(f"Replay callable executions: {replayed.callable_execution_count}")
 ```
 
-在该目录运行：
+在该目录下，使用已安装 RDE Core 的解释器运行：
+
+```console
+python quickstart.py
+```
+
+从仓库 checkout 开发的贡献者可以改为在锁定环境中运行：
 
 ```console
 uv run --locked python quickstart.py
@@ -233,17 +276,17 @@ RDE Core 采用 Apache License 2.0。
 - [安全政策与漏洞报告](SECURITY.zh-CN.md)
 - [隐私与 secret 发布门](docs/zh-CN/privacy-release-gate.md)
 
-已完成的当前树与历史隐私审计不授权直接公开转换永久私有仓库，也不授权发布此
-候选版本。在每一项私有准备门禁通过并由 operator 明确授权 visibility change
-之后，净化的产品仓库已经公开。Private Vulnerability Reporting 已启用并已验证。
-其余公开发布门禁仍保持开启。
+已完成的当前树与历史隐私审计不授权直接公开转换永久私有仓库。在每一项私有准备
+门禁通过并由 operator 明确授权 visibility change 之后，净化的产品仓库已经公开。
+Private Vulnerability Reporting 已启用并已验证。tag `v1.0.0rc5`、GitHub
+prerelease 以及 `1.0.0rc5` 的 PyPI 发布均在这些门禁通过之后完成。
 
 ## 后续阅读
 
 - [变更日志](CHANGELOG.zh-CN.md)
 - [RDE Core v1 兼容性合同](CORE_V1_COMPATIBILITY.zh-CN.md)
-- 1.0.0rc5 私有候选说明仅保留在私有仓库中，并被有意排除在 121-member source
-  distribution 之外。
+- 1.0.0rc5 发布说明保存在本仓库的 `docs/release-notes/1.0.0rc5.md`，并被有意
+  排除在 121-member source distribution 之外。
 - [1.0.0rc3 历史说明（已被取代的私有候选 / 尚未发布）](docs/zh-CN/release-notes/1.0.0rc3.md)
 - [RDE Core v1 测试说明](TESTING.md)
 - [PythonFunctionAdapter 使用指南](docs/zh-CN/python-function-adapter.md)
