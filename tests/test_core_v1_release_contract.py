@@ -421,6 +421,16 @@ RC5_SOURCE_TRACKED_PATH_COUNT = 296
 RC5_PRODUCT_TRACKED_PATH_COUNT = 279
 RC5_SOURCE_PATH_SET_SHA256 = "26eb1c07dcc691af4e602709f75aca916d5eb1f88892cc6d6da26c45ce93529a"
 RC5_PRODUCT_PATH_SET_SHA256 = "33cbb31c21938660788b3abc77ab7125e9ea42101659daafe8037955b24950d5"
+# The S11 distribution delta adds exactly one tracked path, the publishing workflow.
+# The RC5 constants above stay bound to the immutable sanitized product root.
+S11_DISTRIBUTION_TRACKED_PATH_COUNT = 280
+S11_DISTRIBUTION_SOURCE_TRACKED_PATH_COUNT = 297
+S11_DISTRIBUTION_PATH_SET_SHA256 = (
+    "81d2651014f4c2f5c01c2d50ff0721ddcb8c932d2eab67f5c514b22c99e1b96f"
+)
+S11_DISTRIBUTION_SOURCE_PATH_SET_SHA256 = (
+    "d69622e69fae886620a881c29771c144d51c3fba9af33289571046e9c5724dc5"
+)
 RC5_SANITIZED_PRODUCT_ROOT_OID = "80244e7a1652e62937f789c243aac829be167cbd"
 RC5_SELF_HOSTING_REPAIR_PATH = "tests/test_core_v1_release_contract.py"
 RC6_GOVERNANCE_PARENT_OID = "b67a2a49f673d8ffc8ec463f50d49d022d5f5b29"
@@ -505,6 +515,13 @@ ISSUE_TEMPLATE_PATHS = frozenset(
 ISSUE_TEMPLATE_FRONTMATTER_KEYS = frozenset({"name", "about", "title", "labels", "assignees"})
 CORE_WORKFLOW_PATH = ".github/workflows/core-v1.yml"
 CORE_WORKFLOW_SHA256 = "b48afbd078a5e9869c9c4e7d820d7bdfea798c7863c2be2d77bab12d3b1320ac"
+PUBLISH_WORKFLOW_PATH = ".github/workflows/publish-pypi.yml"
+# The S11 distribution delta adds exactly the publishing workflow. Because this module
+# pins the tracked-path inventory it must restate its own path alongside it.
+DISTRIBUTION_INFRASTRUCTURE_CHANGED_PATHS = (
+    PUBLISH_WORKFLOW_PATH,
+    RC5_SELF_HOSTING_REPAIR_PATH,
+)
 CONTRIBUTING_COMMANDS = (
     "uv lock --check",
     "uv sync --locked",
@@ -1268,16 +1285,24 @@ def _release_document_committed_candidate_paths(
     if root_oid != RC5_SANITIZED_PRODUCT_ROOT_OID:
         assert len(parent_oids) == 1
         assert changed_paths
-        assert len(tree_paths) == RC5_SOURCE_TRACKED_PATH_COUNT
-        assert _path_set_sha256(tree_paths) == RC5_SOURCE_PATH_SET_SHA256
+        if PUBLISH_WORKFLOW_PATH in tree_paths:
+            assert len(tree_paths) == S11_DISTRIBUTION_SOURCE_TRACKED_PATH_COUNT
+            assert _path_set_sha256(tree_paths) == S11_DISTRIBUTION_SOURCE_PATH_SET_SHA256
+        else:
+            assert len(tree_paths) == RC5_SOURCE_TRACKED_PATH_COUNT
+            assert _path_set_sha256(tree_paths) == RC5_SOURCE_PATH_SET_SHA256
         assert set(RC5_AUTHORIZED_CHANGED_PATHS) <= tree_paths
         assert set(RC5_INTERNAL_ONLY_REMEDIATION_PATHS) <= tree_paths
         assert set(RC5_INTERNAL_EXCLUDE_PATHS) <= tree_paths
         return "FULL_PRIVATE_SOURCE_ONE_PARENT", tree_paths, changed_paths
 
     root_tree_paths = tree_paths_by_commit[root_oid]
-    assert len(root_tree_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
-    assert _path_set_sha256(root_tree_paths) == RC5_PRODUCT_PATH_SET_SHA256
+    if PUBLISH_WORKFLOW_PATH in root_tree_paths:
+        assert len(root_tree_paths) == S11_DISTRIBUTION_TRACKED_PATH_COUNT
+        assert _path_set_sha256(root_tree_paths) == S11_DISTRIBUTION_PATH_SET_SHA256
+    else:
+        assert len(root_tree_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
+        assert _path_set_sha256(root_tree_paths) == RC5_PRODUCT_PATH_SET_SHA256
     assert set(RC5_PRODUCT_APPLICABLE_REMEDIATION_PATHS) <= root_tree_paths
     assert set(RC5_INTERNAL_ONLY_REMEDIATION_PATHS).isdisjoint(root_tree_paths)
     assert set(RC5_INTERNAL_EXCLUDE_PATHS).isdisjoint(root_tree_paths)
@@ -1675,6 +1700,14 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     assert RC6_GOVERNANCE_PARENT_OID not in PUBLIC_PROVENANCE_ROLE_TOKENS.values()
     assert RC5_SELF_HOSTING_REPAIR_PATH in RC6_GOVERNANCE_CHANGED_PATHS
     assert RC5_SOURCE_TRACKED_PATH_COUNT - RC5_PRODUCT_TRACKED_PATH_COUNT == 17
+    assert S11_DISTRIBUTION_SOURCE_TRACKED_PATH_COUNT - S11_DISTRIBUTION_TRACKED_PATH_COUNT == 17
+    assert S11_DISTRIBUTION_TRACKED_PATH_COUNT == RC5_PRODUCT_TRACKED_PATH_COUNT + 1
+    assert DISTRIBUTION_INFRASTRUCTURE_CHANGED_PATHS == (
+        PUBLISH_WORKFLOW_PATH,
+        RC5_SELF_HOSTING_REPAIR_PATH,
+    )
+    assert PUBLISH_WORKFLOW_PATH.startswith(".github/workflows/")
+    assert PUBLISH_WORKFLOW_PATH != CORE_WORKFLOW_PATH
     assert CI_NODEID_SCRATCH_PATHS == (
         ".core-v1-nodeids-1.txt",
         ".core-v1-nodeids-2.txt",
@@ -1789,6 +1822,7 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     assert validated_scratch_paths in (set(), set(CI_NODEID_SCRATCH_PATHS))
     source_remediation_paths = set(RC5_AUTHORIZED_CHANGED_PATHS)
     repair_paths = {RC5_SELF_HOSTING_REPAIR_PATH}
+    distribution_paths = set(DISTRIBUTION_INFRASTRUCTURE_CHANGED_PATHS)
     if commit_model == "FULL_PRIVATE_SOURCE_ONE_PARENT":
         assert len(tracked_paths) == RC5_SOURCE_TRACKED_PATH_COUNT
         assert all((REPOSITORY_ROOT / path).is_file() for path in RC5_INTERNAL_EXCLUDE_PATHS)
@@ -1805,12 +1839,15 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     elif commit_model == "PUBLIC_GOVERNANCE_LINEAR_DESCENDANT":
         assert len(tracked_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
         assert committed_candidate_paths == set(RC6_GOVERNANCE_CHANGED_PATHS)
-        assert substantive_candidate_paths == set()
+        assert substantive_candidate_paths in (set(), distribution_paths)
         assert all(not (REPOSITORY_ROOT / path).exists() for path in RC5_INTERNAL_EXCLUDE_PATHS)
     else:
         assert commit_model == "SANITIZED_PRODUCT_LINEAR_DESCENDANT"
-        assert len(tracked_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
-        assert committed_candidate_paths in (set(), repair_paths)
+        assert len(tracked_paths) in (
+            RC5_PRODUCT_TRACKED_PATH_COUNT,
+            S11_DISTRIBUTION_TRACKED_PATH_COUNT,
+        )
+        assert committed_candidate_paths in (set(), repair_paths, distribution_paths)
         assert substantive_candidate_paths in (set(), set(RC6_GOVERNANCE_CHANGED_PATHS))
         assert all(not (REPOSITORY_ROOT / path).exists() for path in RC5_INTERNAL_EXCLUDE_PATHS)
     assert set(PROTECTED_DOCUMENT_BLOB_CONTRACT).isdisjoint(source_remediation_paths)
@@ -1829,10 +1866,20 @@ def _assert_c7_release_document_contract(tmp_path: Path) -> None:
     else:
         scripted_product_paths = set(tracked_paths)
         scripted_source_paths = scripted_product_paths | internal_exclude_paths
-    assert len(scripted_source_paths) == RC5_SOURCE_TRACKED_PATH_COUNT
-    assert len(scripted_product_paths) == RC5_PRODUCT_TRACKED_PATH_COUNT
-    assert _path_set_sha256(scripted_source_paths) == RC5_SOURCE_PATH_SET_SHA256
-    assert _path_set_sha256(scripted_product_paths) == RC5_PRODUCT_PATH_SET_SHA256
+    if PUBLISH_WORKFLOW_PATH in scripted_product_paths:
+        expected_source_count = S11_DISTRIBUTION_SOURCE_TRACKED_PATH_COUNT
+        expected_product_count = S11_DISTRIBUTION_TRACKED_PATH_COUNT
+        expected_source_digest = S11_DISTRIBUTION_SOURCE_PATH_SET_SHA256
+        expected_product_digest = S11_DISTRIBUTION_PATH_SET_SHA256
+    else:
+        expected_source_count = RC5_SOURCE_TRACKED_PATH_COUNT
+        expected_product_count = RC5_PRODUCT_TRACKED_PATH_COUNT
+        expected_source_digest = RC5_SOURCE_PATH_SET_SHA256
+        expected_product_digest = RC5_PRODUCT_PATH_SET_SHA256
+    assert len(scripted_source_paths) == expected_source_count
+    assert len(scripted_product_paths) == expected_product_count
+    assert _path_set_sha256(scripted_source_paths) == expected_source_digest
+    assert _path_set_sha256(scripted_product_paths) == expected_product_digest
     assert scripted_source_paths - scripted_product_paths == internal_exclude_paths
 
     def encoded_paths(paths: set[str]) -> bytes:
@@ -3007,7 +3054,7 @@ def _assert_community_health_release_contract() -> None:
     )
     _assert_exact_path_inventory(
         actual_github_files,
-        COMMUNITY_HEALTH_PATHS | {CORE_WORKFLOW_PATH},
+        COMMUNITY_HEALTH_PATHS | {CORE_WORKFLOW_PATH, PUBLISH_WORKFLOW_PATH},
         "GitHub community-health",
     )
     assert len(COMMUNITY_HEALTH_PATHS) == 6

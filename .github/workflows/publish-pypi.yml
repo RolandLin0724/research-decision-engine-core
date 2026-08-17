@@ -1,0 +1,183 @@
+name: Publish RDE Core v1.0.0rc5 to PyPI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish-pypi:
+    name: Publish research-decision-engine 1.0.0rc5 from the released tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+
+    env:
+      RELEASE_TAG: v1.0.0rc5
+      RELEASE_COMMIT: e73a65a2f39e96791dbf8f2458e1afc35a30b1c5
+      PROJECT_NAME: research-decision-engine
+      RELEASE_VERSION: 1.0.0rc5
+      WHEEL_NAME: research_decision_engine-1.0.0rc5-py3-none-any.whl
+      SDIST_NAME: research_decision_engine-1.0.0rc5.tar.gz
+      WHEEL_SHA256: d4819d5811b4b21c71581301bb82b800b095664bf3143f0354393f76608a318e
+      SDIST_SHA256: f3c6dfeee28ca643c0777deb5c062473f79319b0fa8fe8f50c0e5cda6e139f8b
+      WHEEL_BYTES: "871899"
+      SDIST_BYTES: "901294"
+      WHEEL_MEMBER_COUNT: "104"
+      SDIST_MEMBER_COUNT: "121"
+      SOURCE_DATE_EPOCH: "1786313084"
+
+    steps:
+      - name: Check out the released governance tag
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: refs/tags/v1.0.0rc5
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Require the exact authorized release commit
+        run: |
+          set -eu
+          head_commit="$(git rev-parse --verify HEAD)"
+          tag_commit="$(git rev-parse --verify "refs/tags/${RELEASE_TAG}^{commit}")"
+          echo "checked out: ${head_commit}"
+          echo "tag target : ${tag_commit}"
+          if [ "${head_commit}" != "${RELEASE_COMMIT}" ]; then
+            echo "Refusing to build: HEAD is not the authorized release commit." >&2
+            exit 1
+          fi
+          if [ "${tag_commit}" != "${RELEASE_COMMIT}" ]; then
+            echo "Refusing to build: ${RELEASE_TAG} does not resolve to the release commit." >&2
+            exit 1
+          fi
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Refusing to build: the checked out tree is not clean." >&2
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned uv
+        run: python -m pip install uv==0.11.32
+
+      - name: Build the release wheel and source distribution
+        run: uv build --sdist --wheel --out-dir build-output
+
+      - name: Verify the exact artifacts and stage them for upload
+        shell: python
+        run: |
+          import hashlib
+          import os
+          import shutil
+          import tarfile
+          import zipfile
+          from email.parser import BytesParser
+          from pathlib import Path
+
+          workspace = Path(os.environ["GITHUB_WORKSPACE"])
+          build_output = workspace / "build-output"
+          upload = workspace / "upload"
+          upload.mkdir()
+
+          project_name = os.environ["PROJECT_NAME"]
+          version = os.environ["RELEASE_VERSION"]
+          expected = {
+              os.environ["WHEEL_NAME"]: (
+                  os.environ["WHEEL_SHA256"],
+                  int(os.environ["WHEEL_BYTES"]),
+                  int(os.environ["WHEEL_MEMBER_COUNT"]),
+              ),
+              os.environ["SDIST_NAME"]: (
+                  os.environ["SDIST_SHA256"],
+                  int(os.environ["SDIST_BYTES"]),
+                  int(os.environ["SDIST_MEMBER_COUNT"]),
+              ),
+          }
+
+          built = {
+              path.name
+              for path in build_output.iterdir()
+              if path.is_file() and path.suffix in (".whl", ".gz")
+          }
+          if built != set(expected):
+              raise SystemExit(f"Unexpected artifact set: {sorted(built)}")
+
+          for filename, (want_digest, want_bytes, want_members) in sorted(expected.items()):
+              artifact = build_output / filename
+              payload = artifact.read_bytes()
+              digest = hashlib.sha256(payload).hexdigest()
+              if len(payload) != want_bytes:
+                  raise SystemExit(f"{filename}: {len(payload)} bytes, expected {want_bytes}")
+              if digest != want_digest:
+                  raise SystemExit(f"{filename}: sha256 {digest}, expected {want_digest}")
+              if filename.endswith(".whl"):
+                  with zipfile.ZipFile(artifact) as archive:
+                      members = archive.namelist()
+                      metadata_members = [
+                          name for name in members if name.endswith(".dist-info/METADATA")
+                      ]
+                      if len(metadata_members) != 1:
+                          raise SystemExit("Expected exactly one wheel METADATA member.")
+                      metadata = BytesParser().parsebytes(archive.read(metadata_members[0]))
+              else:
+                  with tarfile.open(artifact) as archive:
+                      members = archive.getnames()
+                      pkg_info_members = [
+                          name for name in members if name.endswith("/PKG-INFO")
+                      ]
+                      if len(pkg_info_members) != 1:
+                          raise SystemExit("Expected exactly one sdist PKG-INFO member.")
+                      extracted = archive.extractfile(pkg_info_members[0])
+                      if extracted is None:
+                          raise SystemExit("Unreadable sdist PKG-INFO member.")
+                      metadata = BytesParser().parsebytes(extracted.read())
+              if len(members) != want_members:
+                  raise SystemExit(f"{filename}: {len(members)} members, expected {want_members}")
+              if metadata.get("Name") != project_name:
+                  raise SystemExit(f"{filename}: metadata Name is {metadata.get('Name')!r}")
+              if metadata.get("Version") != version:
+                  raise SystemExit(f"{filename}: metadata Version is {metadata.get('Version')!r}")
+              if metadata.get("Requires-Python") != ">=3.12,<3.13":
+                  raise SystemExit(f"{filename}: unexpected Requires-Python")
+              if any(name.startswith("/") or ".." in name.split("/") for name in members):
+                  raise SystemExit(f"{filename}: unsafe member path")
+              if any(".git/" in name or name.endswith("/.git") for name in members):
+                  raise SystemExit(f"{filename}: unexpected Git material")
+              if any(name.split("/")[-1].startswith("tests") for name in members):
+                  raise SystemExit(f"{filename}: unexpected test material")
+              print(f"{filename} {len(payload)} {digest} members={len(members)}")
+              shutil.copy2(artifact, upload / filename)
+
+          staged = sorted(path.name for path in upload.iterdir())
+          if staged != sorted(expected):
+              raise SystemExit(f"Unexpected staged set: {staged}")
+
+      - name: Check the staged distributions with twine
+        run: uv run --isolated --no-project --with twine==7.0.0 -- twine check --strict upload/*
+
+      - name: Check the built wheel in a clean isolated environment
+        working-directory: ${{ runner.temp }}
+        run: |
+          uv run --isolated --no-project \
+            --with "${{ github.workspace }}/upload/research_decision_engine-1.0.0rc5-py3-none-any.whl" \
+            -- python -m research_decision_engine.core_release_check --installed
+
+      - name: Check the installed command
+        working-directory: ${{ runner.temp }}
+        run: |
+          uv run --isolated --no-project \
+            --with "${{ github.workspace }}/upload/research_decision_engine-1.0.0rc5-py3-none-any.whl" \
+            -- rde --help
+
+      - name: Publish to PyPI with Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
+        with:
+          packages-dir: upload/
+          print-hash: true
